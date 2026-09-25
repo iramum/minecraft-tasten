@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Клавиши для Майнкрафта</title>
+<meta name="description" content="Тренажёр клавиш Minecraft Java для Mac с немецкой клавиатурой">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%238b5a2b'/><rect width='16' height='5' fill='%235fa83a'/><rect x='3' y='5' width='2' height='2' fill='%235fa83a'/><rect x='10' y='5' width='3' height='1' fill='%235fa83a'/></svg>">
+<style>
+:root{
+  --bg:#e9f0e1;--panel:#ffffff;--panel2:#f4f7f0;--ink:#1d2618;--muted:#5a6852;--line:#cfd9c4;
+  --keybg:#fbfbf9;--keyink:#23291f;--keyedge:#b9c1b1;
+  --move:#3aa655;--act:#2f7fd8;--item:#e8961c;--view:#8e5bd6;--danger:#e0412f;
+  --accent:#3aa655;--accentInk:#fff;--shadow:0 2px 0 rgba(0,0,0,.12),0 6px 18px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121810;--panel:#1c2419;--panel2:#232d20;--ink:#eef3e8;--muted:#a3b19a;--line:#34412f;
+    --keybg:#2a3326;--keyink:#eef3e8;--keyedge:#10150e;
+    --move:#4cc26a;--act:#4c97ee;--item:#f2a93a;--view:#a57bea;--danger:#f0604f;
+    --accent:#4cc26a;--accentInk:#0c1a0b;--shadow:0 2px 0 rgba(0,0,0,.5),0 6px 18px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121810;--panel:#1c2419;--panel2:#232d20;--ink:#eef3e8;--muted:#a3b19a;--line:#34412f;
+  --keybg:#2a3326;--keyink:#eef3e8;--keyedge:#10150e;
+  --move:#4cc26a;--act:#4c97ee;--item:#f2a93a;--view:#a57bea;--danger:#f0604f;
+  --accent:#4cc26a;--accentInk:#0c1a0b;--shadow:0 2px 0 rgba(0,0,0,.5),0 6px 18px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:500 16px/1.4 ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-user-select:none;user-select:none;overflow-x:hidden}
+input{-webkit-user-select:text;user-select:text}
+.wrap{max-width:1180px;margin:0 auto;padding:12px 16px 40px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.logo{width:44px;height:44px;border-radius:8px;image-rendering:pixelated;box-shadow:var(--shadow);flex:none}
+h1{font-size:clamp(20px,3.2vw,30px);margin:0;letter-spacing:-.01em;font-weight:800}
+.sub{color:var(--muted);font-size:14px;margin:0}
+.hgrow{flex:1;min-width:200px}
+.pill{display:flex;gap:4px;background:var(--panel);padding:4px;border-radius:12px;box-shadow:var(--shadow)}
+.pill button{border:0;background:transparent;color:var(--ink);font:inherit;font-weight:700;font-size:14px;line-height:1;padding:8px 10px;border-radius:8px;cursor:pointer}
+.pill button.on{background:var(--accent);color:var(--accentInk)}
+nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+nav.tabs button{flex:1 1 140px;border:0;border-radius:14px;padding:12px 14px;background:var(--panel);color:var(--ink);font:inherit;font-weight:800;font-size:18px;line-height:1.1;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;gap:8px}
+nav.tabs button.on{background:var(--accent);color:var(--accentInk)}
+nav.tabs .em{font-size:24px}
+.card{background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:14px}
+.hidden{display:none!important}
+
+/* keyboard */
+#kbdWrap{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:14px;align-items:start;margin-bottom:14px}
+@media (max-width:820px){#kbdWrap{grid-template-columns:1fr}}
+.kbd{background:var(--panel2);border-radius:14px;padding:clamp(4px,1vw,10px);box-shadow:var(--shadow)}
+.row{display:flex;gap:clamp(2px,.45vw,5px);margin-bottom:clamp(2px,.45vw,5px)}
+.row:last-child{margin-bottom:0}
+.key{--g:var(--keyedge);position:relative;min-width:0;height:clamp(28px,5.2vw,58px);border-radius:clamp(4px,.7vw,8px);background:var(--keybg);color:var(--keyink);border:1px solid var(--keyedge);border-bottom-width:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:clamp(9px,1.5vw,17px);cursor:pointer;transition:transform .05s,background .1s;overflow:hidden}
+.frow .key{height:clamp(20px,3.2vw,34px);font-size:clamp(8px,1.1vw,13px)}
+.key .ke{font-size:clamp(8px,1.25vw,15px);line-height:1;margin-top:1px}
+.key .kl{line-height:1;white-space:nowrap}
+.key.small .kl{font-size:clamp(7px,1vw,12px);font-weight:700}
+.key.g-move{--g:var(--move)}.key.g-act{--g:var(--act)}.key.g-item{--g:var(--item)}.key.g-view{--g:var(--view)}.key.g-danger{--g:var(--danger)}
+.key[class*="g-"]{background:color-mix(in srgb,var(--g) 24%,var(--keybg));border-color:color-mix(in srgb,var(--g) 60%,var(--keyedge))}
+.key.down{background:var(--g);color:#fff;transform:translateY(2px);border-bottom-width:1px}
+.key:not([class*="g-"]).down{background:var(--muted)}
+.key.hint{animation:pulse 1s ease-in-out infinite;z-index:1}
+.key.enterTop{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom-width:0;margin-bottom:calc(-1 * clamp(2px,.45vw,5px));height:calc(clamp(28px,5.2vw,58px) + clamp(2px,.45vw,5px))}
+.key.enterBot{border-top-left-radius:0;border-top-right-radius:0;border-top-width:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--g) 0%,transparent)}50%{box-shadow:0 0 0 4px var(--g)}}
+.arrows{display:flex;gap:clamp(2px,.45vw,5px);min-width:0}
+.arrows .key{flex:1 1 0}
+.ud{flex:1 1 0;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ud .key{height:calc((clamp(28px,5.2vw,58px) - 2px)/2);font-size:clamp(7px,1vw,11px);border-bottom-width:2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:13px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;background:var(--c)}
+
+/* mouse */
+.mouseBox{display:flex;flex-direction:column;gap:8px;align-items:center}
+#mouseSvg{width:100%;max-width:150px;height:auto}
+#mouseSvg .mb{fill:var(--keybg);stroke:var(--keyedge);stroke-width:3;cursor:pointer;transition:fill .1s}
+#mouseSvg .mb.l{fill:color-mix(in srgb,var(--act) 24%,var(--keybg))}
+#mouseSvg .mb.r{fill:color-mix(in srgb,var(--item) 30%,var(--keybg))}
+#mouseSvg .mb.w{fill:color-mix(in srgb,var(--view) 30%,var(--keybg))}
+#mouseSvg .mb.down.l{fill:var(--act)}#mouseSvg .mb.down.r{fill:var(--item)}#mouseSvg .mb.down.w{fill:var(--view)}
+#mouseSvg .mb.hint{animation:mpulse 1s infinite}
+@keyframes mpulse{50%{stroke:var(--danger);stroke-width:6}}
+#mouseSvg text{font:800 20px system-ui;fill:var(--keyink);pointer-events:none}
+.pad{width:100%;aspect-ratio:1/1;max-width:170px;border-radius:10px;background-size:100% 100%;image-rendering:pixelated;box-shadow:inset 0 -6px 0 rgba(0,0,0,.25),var(--shadow);position:relative;cursor:crosshair;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.pad .padtxt{background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:700;padding:4px 6px;border-radius:6px;margin:6px;text-align:center}
+.pad .crack{position:absolute;inset:0;background:rgba(0,0,0,.0);pointer-events:none}
+.pad.hint{outline:4px solid var(--danger);outline-offset:3px;animation:padp 1s infinite}
+@keyframes padp{50%{outline-color:transparent}}
+
+/* explore */
+#info{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;min-height:120px}
+@media (max-width:600px){#info{grid-template-columns:1fr}}
+.bigkey{min-width:110px;height:110px;padding:0 18px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:900;background:color-mix(in srgb,var(--g,var(--muted)) 26%,var(--keybg));border:2px solid var(--g,var(--keyedge));border-bottom-width:7px;color:var(--keyink)}
+.infoTitle{font-size:clamp(22px,3.4vw,34px);font-weight:900;line-height:1.15}
+.infoNote{color:var(--muted);font-size:16px;margin-top:6px}
+.emoBig{font-size:64px;line-height:1}
+.say{border:0;background:var(--panel2);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:22px;cursor:pointer;box-shadow:var(--shadow)}
+
+/* lessons */
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.lvl{border:0;border-radius:14px;padding:12px;background:var(--panel);color:var(--ink);font:inherit;font-weight:800;font-size:16px;line-height:1.2;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;text-align:left}
+.lvl .em{font-size:30px}
+.lvl.on{outline:3px solid var(--accent)}
+.lvl .stars{font-size:13px;color:var(--muted);font-weight:700;display:block}
+#task{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center}
+@media (max-width:600px){#task{grid-template-columns:1fr}}
+.taskEmo{font-size:70px;line-height:1}
+.taskTxt{font-size:clamp(22px,3.4vw,34px);font-weight:900;line-height:1.15}
+.taskSub{color:var(--muted);margin-top:6px;min-height:22px;font-size:16px}
+.dots{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.dots i{width:18px;height:18px;border-radius:4px;background:var(--line);display:block}
+.dots i.ok{background:var(--accent)}
+.dots i.cur{outline:2px solid var(--accent);outline-offset:1px}
+.bar{height:12px;border-radius:6px;background:var(--line);margin-top:10px;overflow:hidden}
+.bar b{display:block;height:100%;width:0;background:var(--accent);border-radius:6px}
+.tbtns{display:flex;flex-direction:column;gap:8px}
+.btn{border:0;border-radius:12px;padding:10px 14px;background:var(--panel2);color:var(--ink);font:inherit;font-weight:800;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--shadow)}
+.btn.main{background:var(--accent);color:var(--accentInk)}
+.praise{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%) scale(.6);font-size:clamp(40px,8vw,90px);font-weight:900;color:#fff;text-shadow:0 4px 0 #2b6b1d,0 0 30px rgba(0,0,0,.35);pointer-events:none;opacity:0;transition:all .25s;z-index:50;white-space:nowrap}
+.praise.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.done{text-align:center;padding:10px}
+.done .big{font-size:60px}
+.done h2{margin:6px 0 12px;font-size:30px}
+
+/* world */
+#worldBox{position:relative;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:#1b3a8a}
+#cv{display:block;width:100%;cursor:crosshair;touch-action:none}
+.ov{position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:5}
+.ovc{background:#c6c6c6;color:#222;border:4px solid #fff;border-right-color:#555;border-bottom-color:#555;border-radius:4px;padding:14px;max-width:92%;max-height:92%;overflow:auto}
+.ovc h3{margin:0 0 10px;font-size:20px}
+.ovc .btn{background:#8b8b8b;color:#fff;border-radius:4px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.35);display:block;width:100%;margin-top:8px;text-align:center}
+.slots{display:grid;grid-template-columns:repeat(9,44px);gap:3px}
+.slot{width:44px;height:44px;background:#8b8b8b;border:2px solid #373737;border-right-color:#fff;border-bottom-color:#fff;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.slot img{width:32px;height:32px;image-rendering:pixelated;pointer-events:none}
+.slot b{position:absolute;right:2px;bottom:0;color:#fff;font-size:13px;text-shadow:1px 1px 0 #3f3f3f;pointer-events:none}
+.slot.sel{outline:3px solid #fff;outline-offset:-3px;background:#a0a0a0}
+.slot.pick{outline:3px solid #ffd23d;outline-offset:-3px}
+.slot .num{position:absolute;left:2px;top:0;color:#444;font-size:10px;font-weight:800;text-shadow:none}
+.invRow{display:flex;gap:10px;align-items:flex-end;margin-top:10px}
+.invLbl{font-size:13px;color:#444;margin:10px 0 4px;font-weight:700}
+#chatBar{position:absolute;left:8px;right:8px;bottom:8px;z-index:6;display:flex;gap:6px}
+#chatIn{flex:1;background:rgba(0,0,0,.6);color:#fff;border:2px solid #aaa;border-radius:4px;padding:8px 10px;font:600 16px ui-monospace,Menlo,monospace;outline:none}
+.adv{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.adv div{background:#8b8b8b;color:#fff;padding:8px;border-radius:3px;display:flex;gap:8px;align-items:center;font-size:14px}
+.adv div.got{background:#4c8a3a}
+.adv div span{font-size:24px}
+.adv div small{display:block;opacity:.85;font-size:12px}
+.wlegend{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;margin-top:12px}
+.wl{display:flex;gap:8px;align-items:center;background:var(--panel);border-radius:10px;padding:6px 8px;box-shadow:var(--shadow);font-size:14px}
+.wl kbd{font:800 13px ui-rounded,system-ui;background:color-mix(in srgb,var(--g) 26%,var(--keybg));border:1px solid var(--g);border-bottom-width:3px;border-radius:6px;padding:3px 6px;white-space:nowrap;color:var(--keyink)}
+.wl.lit{outline:3px solid var(--g)}
+#lastKey{margin-top:10px;font-size:18px;font-weight:800;min-height:28px}
+.touchNote{background:var(--panel);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+
+/* parents */
+.tips{display:grid;gap:10px}
+.tip{background:var(--panel);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:start}
+.tip .ti{font-size:28px;line-height:1}
+.tip h3{margin:0 0 4px;font-size:18px}
+.tip p{margin:0;color:var(--ink);font-size:15px;line-height:1.5}
+.tip kbd{font:800 13px ui-rounded,system-ui;background:var(--keybg);border:1px solid var(--keyedge);border-bottom-width:3px;border-radius:6px;padding:1px 6px;white-space:nowrap}
+.nameRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.nameRow input{font:inherit;font-weight:700;font-size:16px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <canvas class="logo" id="logo" width="16" height="16"></canvas>
+    <div class="hgrow">
+      <h1 data-i="title"></h1>
+      <p class="sub" data-i="sub"></p>
+    </div>
+    <div class="pill" id="langs">
+      <button data-l="ru">RU</button><button data-l="de">DE</button><button data-l="en">EN</button>
+    </div>
+    <div class="pill"><button id="soundBtn"></button></div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-t="explore"><span class="em">🔍</span><span data-i="tExplore"></span></button>
+    <button data-t="lessons"><span class="em">⭐</span><span data-i="tLessons"></span></button>
+    <button data-t="world"><span class="em">🌍</span><span data-i="tWorld"></span></button>
+    <button data-t="parents"><span class="em">👩‍👧</span><span data-i="tParents"></span></button>
+  </nav>
+
+  <!-- shared keyboard + mouse -->
+  <section id="kbdWrap">
+    <div>
+      <div class="kbd" id="kbd"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="card mouseBox">
+      <svg id="mouseSvg" viewBox="0 0 120 190" aria-label="mouse">
+        <path class="mb l" data-m="0" d="M58 10 C30 10 12 30 12 62 L12 80 L58 80 Z"/>
+        <path class="mb r" data-m="2" d="M62 10 C90 10 108 30 108 62 L108 80 L62 80 Z"/>
+        <path class="mb" data-m="body" d="M12 84 L108 84 L108 130 C108 162 88 182 60 182 C32 182 12 162 12 130 Z" style="cursor:default"/>
+        <rect class="mb w" data-m="1" x="50" y="24" width="20" height="40" rx="10"/>
+        <text x="28" y="56">L</text><text x="80" y="56">R</text>
+      </svg>
+      <div class="pad" id="pad"><div class="crack" id="crack"></div><div class="padtxt" data-i="padHint"></div></div>
+    </div>
+  </section>
+
+  <!-- explore -->
+  <section id="p-explore" class="panel">
+    <div class="card" id="info"></div>
+  </section>
+
+  <!-- lessons -->
+  <section id="p-lessons" class="panel">
+    <div class="levels" id="levels"></div>
+    <div class="card" id="taskCard"></div>
+  </section>
+
+  <!-- world -->
+  <section id="p-world" class="panel">
+    <div class="touchNote hidden" id="touchNote" data-i="touchNote"></div>
+    <div id="worldBox">
+      <canvas id="cv"></canvas>
+      <div class="ov hidden" id="ovPause"><div class="ovc">
+        <h3 data-i="paused"></h3>
+        <button class="btn" id="bResume" data-i="resume"></button>
+        <button class="btn" id="bNew" data-i="newWorld"></button>
+        <button class="btn" id="bGm"></button>
+      </div></div>
+      <div class="ov hidden" id="ovInv"><div class="ovc">
+        <h3 data-i="invTitle"></h3>
+        <div class="invLbl" data-i="invMain"></div>
+        <div class="slots" id="invMain"></div>
+        <div class="invLbl" data-i="invHot"></div>
+        <div class="invRow"><div class="slots" id="invHot"></div>
+          <div><div class="invLbl" data-i="offhand" style="margin-top:0"></div><div class="slot" id="invOff"></div></div></div>
+        <div class="invLbl" data-i="invHelp" style="font-weight:600"></div>
+      </div></div>
+      <div class="ov hidden" id="ovAdv"><div class="ovc" style="min-width:min(640px,92%)">
+        <h3 data-i="advTitle"></h3><div class="adv" id="advList"></div>
+        <button class="btn" id="bAdvClose" data-i="close"></button>
+      </div></div>
+      <div class="ov hidden" id="ovPlayers" style="background:transparent;align-items:flex-start;padding-top:20px"><div class="ovc" id="playersList" style="background:rgba(0,0,0,.6);color:#fff;border-color:#888"></div></div>
+      <div id="chatBar" class="hidden"><input id="chatIn" maxlength="100" autocomplete="off" spellcheck="false"></div>
+    </div>
+    <div id="lastKey"></div>
+    <div class="wlegend" id="wlegend"></div>
+  </section>
+
+  <!-- parents -->
+  <section id="p-parents" class="panel">
+    <div class="tips" id="tips"></div>
+  </section>
+
+  <footer data-i="foot"></footer>
+</div>
+<div class="praise" id="praise"></div>
+
+<script>
+"use strict";
+/* ---------- storage (never required) ---------- */
+const store={get(k,d){try{const v=localStorage.getItem('mct_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('mct_'+k,JSON.stringify(v))}catch(e){}}};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let LANG=store.get('lang','ru'); if(!['ru','de','en'].includes(LANG)) LANG='ru';
+let SOUND=store.get('sound',true);
+let TAB=store.get('tab','explore');
+
+/* ---------- texts ---------- */
+const UI={
+ru:{title:'Клавиши для Майнкрафта',sub:'Тренировка на Mac · немецкая клавиатура · мышка',tExplore:'Изучаем',tLessons:'Задания',tWorld:'Мир',tParents:'Для взрослых',
+padHint:'мышка — сюда',pressAny:'Нажми любую клавишу',pressAnySub:'или кнопку мышки на блоке травы справа. Я скажу, что она делает в Майнкрафте.',
+notUsed:'В Майнкрафте эта клавиша не нужна',fnNote:'На Mac F-клавиши нажимаются вместе с fn',slashNote:'Напечатать «/» в чате: Shift + 7',
+dangerNote:'⌘ + Q сразу закроет игру. ⌘ + W закроет эту страницу.',ctrlNote:'Бегать можно и так: быстро нажми W два раза и держи.',
+legend:{move:'ходить',act:'действия',item:'предметы',view:'экран и меню',danger:'опасно'},
+sound:'Звук',skip:'Пропустить',again:'Ещё раз',next:'Следующий уровень',chooseLevel:'Выбери уровень сверху',
+praise:['Супер!','Молодец!','Отлично!','Здорово!','Ура!'],levelDone:'Уровень пройден!',allDone:'Все уровни пройдены! Ты готова играть!',
+wrong:(k,a)=>`Это ${k}${a?' — '+a:''}. Попробуй ещё!`,holdHint:'Держи, пока полоска не заполнится',toWorld:'Играть в мире',
+touchNote:'Для мира нужны клавиатура и мышка — открой эту страницу на компьютере.',
+paused:'Пауза',resume:'Вернуться в игру (esc)',newWorld:'Новый мир',gmS:'Режим: выживание',gmC:'Режим: творческий',
+invTitle:'Рюкзак — нажми E, чтобы закрыть',invMain:'Рюкзак',invHot:'Руки (ячейки 1–9)',offhand:'Другая рука',invHelp:'Кликни на один предмет, потом на другое место — они поменяются.',
+advTitle:'Достижения (L)',close:'Закрыть',players:'Игроки (Tab)',you:'ты',
+lastKey:'Ты нажала:',creative:'Творческий режим',full:'Рюкзак полон!',shot:'Снимок!',cam:['Камера: обычная','Камера: далеко','Камера: близко'],
+chatHelp:'Команды: /time set day · /time set night · /weather rain · /weather clear · /gamemode creative · /gamemode survival',
+unknownCmd:'Не знаю такую команду. Напиши /help',dayOn:'Наступил день',nightOn:'Наступила ночь',rainOn:'Пошёл дождь',rainOff:'Дождь кончился',gmOnC:'Творческий режим: всё бесконечное',gmOnS:'Режим выживания',
+advGot:'Достижение получено!',worldIntro:'Кликни по миру мышкой и играй! W A S D — ходить, левая кнопка — ломать, правая — ставить.',
+dbgLook:'Смотрю',dirs:['север','восток','юг','запад'],dbgBlock:'Блок',
+foot:'Неофициальный тренажёр для детей. Не связан с Mojang и Microsoft. Прогресс хранится только в этом браузере.'},
+de:{title:'Minecraft-Tasten üben',sub:'Training am Mac · deutsche Tastatur · Maus',tExplore:'Entdecken',tLessons:'Aufgaben',tWorld:'Welt',tParents:'Für Eltern',
+padHint:'Maus hier',pressAny:'Drück irgendeine Taste',pressAnySub:'oder eine Maustaste auf dem Grasblock rechts. Ich sage dir, was sie in Minecraft macht.',
+notUsed:'Diese Taste brauchst du in Minecraft nicht',fnNote:'Am Mac drückst du F-Tasten zusammen mit fn',slashNote:'„/“ im Chat tippen: Shift + 7',
+dangerNote:'⌘ + Q beendet sofort das Spiel. ⌘ + W schließt diese Seite.',ctrlNote:'Sprinten geht auch so: W schnell zweimal drücken und halten.',
+legend:{move:'laufen',act:'Aktionen',item:'Gegenstände',view:'Bildschirm & Menü',danger:'Vorsicht'},
+sound:'Ton',skip:'Überspringen',again:'Nochmal',next:'Nächstes Level',chooseLevel:'Wähle oben ein Level',
+praise:['Super!','Toll!','Klasse!','Prima!','Juhu!'],levelDone:'Level geschafft!',allDone:'Alle Level geschafft! Du bist bereit zum Spielen!',
+wrong:(k,a)=>`Das ist ${k}${a?' — '+a:''}. Versuch es nochmal!`,holdHint:'Halten, bis der Balken voll ist',toWorld:'In der Welt spielen',
+touchNote:'Für die Welt brauchst du Tastatur und Maus — öffne die Seite am Computer.',
+paused:'Pause',resume:'Zurück zum Spiel (esc)',newWorld:'Neue Welt',gmS:'Modus: Überleben',gmC:'Modus: Kreativ',
+invTitle:'Inventar — E drücken zum Schließen',invMain:'Rucksack',invHot:'Hände (Slots 1–9)',offhand:'Andere Hand',invHelp:'Klick auf einen Gegenstand, dann auf einen anderen Platz — sie tauschen.',
+advTitle:'Fortschritte (L)',close:'Schließen',players:'Spieler (Tab)',you:'du',
+lastKey:'Du hast gedrückt:',creative:'Kreativmodus',full:'Inventar voll!',shot:'Foto!',cam:['Kamera: normal','Kamera: weit','Kamera: nah'],
+chatHelp:'Befehle: /time set day · /time set night · /weather rain · /weather clear · /gamemode creative · /gamemode survival',
+unknownCmd:'Diesen Befehl kenne ich nicht. Schreib /help',dayOn:'Es ist Tag',nightOn:'Es ist Nacht',rainOn:'Es regnet',rainOff:'Der Regen hört auf',gmOnC:'Kreativmodus: alles unendlich',gmOnS:'Überlebensmodus',
+advGot:'Fortschritt erzielt!',worldIntro:'Klick in die Welt und spiel! W A S D — laufen, linke Taste — abbauen, rechte — setzen.',
+dbgLook:'Blick',dirs:['Norden','Osten','Süden','Westen'],dbgBlock:'Block',
+foot:'Inoffizieller Übungs-Trainer für Kinder. Nicht verbunden mit Mojang oder Microsoft. Fortschritt bleibt nur in diesem Browser.'},
+en:{title:'Minecraft Keys Trainer',sub:'Practice on a Mac · German keyboard · mouse',tExplore:'Explore',tLessons:'Lessons',tWorld:'World',tParents:'For parents',
+padHint:'mouse here',pressAny:'Press any key',pressAnySub:'or a mouse button on the grass block on the right. I’ll tell you what it does in Minecraft.',
+notUsed:'You don’t need this key in Minecraft',fnNote:'On a Mac, press F keys together with fn',slashNote:'Typing “/” in chat: Shift + 7',
+dangerNote:'⌘ + Q quits the game at once. ⌘ + W closes this page.',ctrlNote:'You can also sprint by tapping W twice fast and holding it.',
+legend:{move:'move',act:'actions',item:'items',view:'screen & menu',danger:'careful'},
+sound:'Sound',skip:'Skip',again:'Again',next:'Next level',chooseLevel:'Pick a level above',
+praise:['Super!','Well done!','Great!','Awesome!','Yay!'],levelDone:'Level complete!',allDone:'All levels done! You’re ready to play!',
+wrong:(k,a)=>`That’s ${k}${a?' — '+a:''}. Try again!`,holdHint:'Hold until the bar is full',toWorld:'Play in the world',
+touchNote:'The world needs a keyboard and a mouse — open this page on a computer.',
+paused:'Paused',resume:'Back to game (esc)',newWorld:'New world',gmS:'Mode: survival',gmC:'Mode: creative',
+invTitle:'Inventory — press E to close',invMain:'Backpack',invHot:'Hands (slots 1–9)',offhand:'Other hand',invHelp:'Click one item, then another place — they swap.',
+advTitle:'Advancements (L)',close:'Close',players:'Players (Tab)',you:'you',
+lastKey:'You pressed:',creative:'Creative mode',full:'Inventory full!',shot:'Screenshot!',cam:['Camera: normal','Camera: far','Camera: close'],
+chatHelp:'Commands: /time set day · /time set night · /weather rain · /weather clear · /gamemode creative · /gamemode survival',
+unknownCmd:'Unknown command. Type /help',dayOn:'It’s daytime',nightOn:'It’s night',rainOn:'It’s raining',rainOff:'The rain stopped',gmOnC:'Creative mode: everything is endless',gmOnS:'Survival mode',
+advGot:'Advancement made!',worldIntro:'Click the world and play! W A S D — walk, left button — break, right button — place.',
+dbgLook:'Facing',dirs:['north','east','south','west'],dbgBlock:'Block',
+foot:'Unofficial practice tool for kids. Not affiliated with Mojang or Microsoft. Progress is stored only in this browser.'}
+};
+const U=()=>UI[LANG];
+const tr=o=>o[LANG]||o.en;
+
+/* ---------- keyboard layout: Mac, German ISO. [event.code, label, width] ---------- */
+const F=n=>['F'+n,'F'+n,1.125];
+const ROWS=[
+ [['Escape','esc',1.5],...Array.from({length:12},(_,i)=>F(i+1))],
+ [['Backquote','^'],['Digit1','1'],['Digit2','2'],['Digit3','3'],['Digit4','4'],['Digit5','5'],['Digit6','6'],['Digit7','7'],['Digit8','8'],['Digit9','9'],['Digit0','0'],['Minus','ß'],['Equal','´'],['Backspace','⌫',2]],
+ [['Tab','⇥',1.5],['KeyQ','Q'],['KeyW','W'],['KeyE','E'],['KeyR','R'],['KeyT','T'],['KeyY','Z'],['KeyU','U'],['KeyI','I'],['KeyO','O'],['KeyP','P'],['BracketLeft','Ü'],['BracketRight','+'],['Enter','↩',1.5,'enterTop']],
+ [['CapsLock','⇪',1.75],['KeyA','A'],['KeyS','S'],['KeyD','D'],['KeyF','F'],['KeyG','G'],['KeyH','H'],['KeyJ','J'],['KeyK','K'],['KeyL','L'],['Semicolon','Ö'],['Quote','Ä'],['Backslash','#'],['Enter','',1.25,'enterBot']],
+ [['ShiftLeft','⇧ shift',1.25],['IntlBackslash','<'],['KeyZ','Y'],['KeyX','X'],['KeyC','C'],['KeyV','V'],['KeyB','B'],['KeyN','N'],['KeyM','M'],['Comma',','],['Period','.'],['Slash','-'],['ShiftRight','⇧ shift',2.75]],
+ [['Fn','fn 🌐',1],['ControlLeft','⌃ ctrl',1.25],['AltLeft','⌥ alt',1.25],['MetaLeft','⌘ cmd',1.5],['Space','',4.5],['MetaRight','⌘ cmd',1.5],['AltRight','⌥ alt',1],['ARROWS','',3]]
+];
+const LABEL={}; ROWS.flat().forEach(k=>{ if(k[1]) LABEL[k[0]]=k[1] });
+LABEL.Space={ru:'пробел',de:'Leertaste',en:'space'}; LABEL.ArrowLeft='←';LABEL.ArrowRight='→';LABEL.ArrowUp='↑';LABEL.ArrowDown='↓';LABEL.Enter='↩ enter';
+const keyName=c=>{const l=LABEL[c]; if(!l) return c.replace(/^Key|^Digit/,''); return typeof l==='object'?tr(l):l};
+
+/* ---------- Minecraft Java default bindings, by physical key ---------- */
+const ACTIONS=[
+ ['KeyW','move','⬆️',{ru:'Идти вперёд',de:'Vorwärts gehen',en:'Walk forward'}],
+ ['KeyA','move','⬅️',{ru:'Шаг влево',de:'Nach links gehen',en:'Step left'}],
+ ['KeyS','move','⬇️',{ru:'Идти назад',de:'Rückwärts gehen',en:'Walk back'}],
+ ['KeyD','move','➡️',{ru:'Шаг вправо',de:'Nach rechts gehen',en:'Step right'}],
+ ['Space','move','🦘',{ru:'Прыжок',de:'Springen',en:'Jump'}],
+ ['ShiftLeft','move','🐢',{ru:'Красться — не упадёшь с края',de:'Schleichen — du fällst nicht runter',en:'Sneak — you won’t fall off edges'}],
+ ['ControlLeft','move','⚡',{ru:'Бег — держи вместе с W',de:'Sprinten — zusammen mit W halten',en:'Sprint — hold together with W'}],
+ ['KeyE','item','🎒',{ru:'Рюкзак (инвентарь)',de:'Inventar öffnen',en:'Open inventory'}],
+ ['KeyQ','item','🫳',{ru:'Выбросить предмет',de:'Gegenstand fallen lassen',en:'Drop item'}],
+ ['KeyF','item','🤲',{ru:'Переложить в другую руку',de:'In die andere Hand nehmen',en:'Swap to other hand'}],
+ ...Array.from({length:9},(_,i)=>['Digit'+(i+1),'item',(i+1)+'️⃣',{ru:'Ячейка '+(i+1),de:'Slot '+(i+1),en:'Slot '+(i+1)}]),
+ ['KeyT','act','💬',{ru:'Чат — написать сообщение',de:'Chat — Nachricht schreiben',en:'Chat — write a message'}],
+ ['Slash','act','✨',{ru:'Команда «/» — в игре это клавиша «-»',de:'Befehl „/“ — im Spiel ist das die Taste „-“',en:'Command “/” — in the game it’s the “-” key'}],
+ ['Enter','act','📨',{ru:'Отправить сообщение в чате',de:'Chatnachricht senden',en:'Send chat message'}],
+ ['Tab','act','👥',{ru:'Кто играет (держи)',de:'Wer spielt mit (halten)',en:'Who is playing (hold)'}],
+ ['KeyL','act','🏆',{ru:'Достижения',de:'Fortschritte',en:'Advancements'}],
+ ['Escape','view','⏸️',{ru:'Пауза и меню',de:'Pause und Menü',en:'Pause and menu'}],
+ ['F1','view','🙈',{ru:'Спрятать всё с экрана',de:'Anzeige ausblenden',en:'Hide the HUD'}],
+ ['F2','view','📸',{ru:'Сфотографировать экран',de:'Bildschirmfoto',en:'Screenshot'}],
+ ['F3','view','📍',{ru:'Где я? Координаты',de:'Wo bin ich? Koordinaten',en:'Where am I? Coordinates'}],
+ ['F5','view','🎥',{ru:'Поменять камеру',de:'Kamera wechseln',en:'Change camera'}],
+ ['F11','view','🖥️',{ru:'Во весь экран',de:'Vollbild',en:'Fullscreen'}],
+ ['Fn','view','🌐',{ru:'fn — помощник для F1…F12',de:'fn — Helfer für F1…F12',en:'fn — helper for F1…F12'}],
+ ['MetaLeft','danger','⛔',{ru:'Осторожно! ⌘ + Q закроет игру',de:'Vorsicht! ⌘ + Q beendet das Spiel',en:'Careful! ⌘ + Q quits the game'}],
+ ['MetaRight','danger','⛔',{ru:'Осторожно! ⌘ + Q закроет игру',de:'Vorsicht! ⌘ + Q beendet das Spiel',en:'Careful! ⌘ + Q quits the game'}],
+];
+const ACT={}; ACTIONS.forEach(a=>ACT[a[0]]={grp:a[1],emo:a[2],txt:a[3]});
+const MOUSE={
+ 0:['⛏️',{ru:'Левая кнопка: ломать и бить (держи)',de:'Linke Taste: abbauen und angreifen (halten)',en:'Left button: break and attack (hold)'},'act'],
+ 2:['🧱',{ru:'Правая кнопка: поставить блок, открыть, съесть',de:'Rechte Taste: Block setzen, öffnen, essen',en:'Right button: place, open, eat'},'item'],
+ 1:['🎯',{ru:'Нажми на колёсико: взять такой же блок',de:'Mausrad drücken: gleichen Block wählen',en:'Press the wheel: pick the same block'},'view'],
+ wheel:['🔄',{ru:'Крути колёсико: выбрать ячейку 1–9',de:'Mausrad drehen: Slot 1–9 wählen',en:'Scroll the wheel: choose slot 1–9'},'view']
+};
+const MNAME={0:{ru:'левая кнопка',de:'linke Taste',en:'left button'},2:{ru:'правая кнопка',de:'rechte Taste',en:'right button'},1:{ru:'колёсико',de:'Mausrad',en:'wheel'}};
+
+/* ---------- lessons ---------- */
+const K=(codes,ru,de,en,extra)=>Object.assign({t:'key',codes,txt:{ru,de,en}},extra||{});
+const LESSONS=[
+ {id:'walk',emo:'🚶',name:{ru:'Ходим',de:'Laufen',en:'Walking'},tasks:[
+  K(['KeyW'],'Иди вперёд! Нажми W','Geh vorwärts! Drück W','Walk forward! Press W',{emo:'⬆️'}),
+  K(['KeyS'],'Теперь назад — S','Jetzt rückwärts — S','Now walk back — S',{emo:'⬇️'}),
+  K(['KeyA'],'Шаг влево — A','Nach links — A','Step left — A',{emo:'⬅️'}),
+  K(['KeyD'],'Шаг вправо — D','Nach rechts — D','Step right — D',{emo:'➡️'}),
+  K(['Space'],'Прыгни! Длинная клавиша внизу — пробел','Spring! Die lange Taste unten — Leertaste','Jump! The long key at the bottom — space',{emo:'🦘'}),
+  {t:'hold',codes:['ShiftLeft'],ms:1500,emo:'🐢',txt:{ru:'Крадёмся тихо: держи shift слева',de:'Leise schleichen: halte links shift',en:'Sneak quietly: hold the left shift'}},
+  {t:'hold',codes:['ControlLeft','KeyW'],ms:1500,emo:'⚡',txt:{ru:'Бежим! Держи ctrl и W вместе',de:'Sprint! Halte ctrl und W zusammen',en:'Sprint! Hold ctrl and W together'}},
+ ]},
+ {id:'hands',emo:'🖱️',name:{ru:'Мышка',de:'Maus',en:'Mouse'},tasks:[
+  {t:'mouse',btn:0,emo:'👊',txt:{ru:'Ударь по блоку травы: левая кнопка мышки',de:'Hau auf den Grasblock: linke Maustaste',en:'Hit the grass block: left mouse button'}},
+  {t:'mhold',btn:0,ms:1500,emo:'⛏️',txt:{ru:'Ломай блок: держи левую кнопку, пока не треснет',de:'Bau den Block ab: linke Taste halten, bis er bricht',en:'Break the block: hold the left button until it cracks'}},
+  {t:'mouse',btn:2,emo:'🧱',txt:{ru:'Поставь блок: правая кнопка мышки',de:'Setz einen Block: rechte Maustaste',en:'Place a block: right mouse button'}},
+  {t:'wheel',n:3,emo:'🔄',txt:{ru:'Покрути колёсико над блоком — так выбирают ячейку',de:'Dreh das Mausrad über dem Block — so wählst du den Slot',en:'Scroll the wheel over the block — that’s how you pick a slot'}},
+  {t:'mouse',btn:1,emo:'🎯',txt:{ru:'Нажми на колёсико сверху, как на кнопку',de:'Drück auf das Mausrad wie auf eine Taste',en:'Press down on the wheel like a button'},sub:{ru:'Если у мышки нет колёсика — нажми «Пропустить»',de:'Kein Mausrad? Dann „Überspringen“',en:'No wheel on your mouse? Press “Skip”'}},
+ ]},
+ {id:'bag',emo:'🎒',name:{ru:'Рюкзак',de:'Rucksack',en:'Backpack'},tasks:[
+  K(['KeyE'],'Открой рюкзак — E','Öffne das Inventar — E','Open the inventory — E',{emo:'🎒'}),
+  K(['KeyE','Escape'],'Закрой рюкзак — снова E','Schließ es wieder — E','Close it again — E',{emo:'🎒'}),
+  K(['Digit1'],'Возьми в руку предмет из ячейки 1','Nimm den Gegenstand aus Slot 1','Take the item from slot 1',{emo:'1️⃣'}),
+  K(['Digit5'],'Теперь ячейка 5','Jetzt Slot 5','Now slot 5',{emo:'5️⃣'}),
+  K(['Digit9'],'И последняя — 9','Und der letzte — 9','And the last one — 9',{emo:'9️⃣'}),
+  K(['KeyQ'],'Выброси предмет — Q','Wirf den Gegenstand weg — Q','Drop the item — Q',{emo:'🫳'}),
+  K(['KeyF'],'Переложи в другую руку — F','Nimm ihn in die andere Hand — F','Swap it to your other hand — F',{emo:'🤲'}),
+ ]},
+ {id:'master',emo:'🏅',name:{ru:'Мастер',de:'Profi',en:'Master'},tasks:[
+  K(['KeyT'],'Открой чат — T','Öffne den Chat — T','Open the chat — T',{emo:'💬'}),
+  K(['Escape'],'Пауза — esc, в самом левом верхнем углу','Pause — esc, ganz oben links','Pause — esc, top left corner',{emo:'⏸️'}),
+  K(['F5'],'Смени камеру: держи fn и нажми F5','Kamera wechseln: fn halten und F5 drücken','Change camera: hold fn and press F5',{emo:'🎥',fn:1}),
+  K(['F3'],'Где я? Держи fn и нажми F3','Wo bin ich? fn halten und F3 drücken','Where am I? Hold fn and press F3',{emo:'📍',fn:1}),
+  {t:'sprintjump',codes:['KeyW','Space'],emo:'🏃',txt:{ru:'Разбег и прыжок: нажми W два раза быстро, держи — и пробел',de:'Anlauf und Sprung: W zweimal schnell, halten — und Leertaste',en:'Run-up and jump: tap W twice fast, hold it — then space'}},
+ ]},
+ {id:'quiz',emo:'❓',name:{ru:'Покажи',de:'Zeig mal',en:'Show me'},tasks:[
+  {t:'pick',codes:['Space'],emo:'🦘',txt:{ru:'Покажи мышкой на картинке: чем прыгать?',de:'Zeig mit der Maus auf dem Bild: womit springst du?',en:'Click on the picture: which key jumps?'}},
+  {t:'pick',codes:['KeyE'],emo:'🎒',txt:{ru:'Где открывается рюкзак?',de:'Wo geht das Inventar auf?',en:'Which key opens the inventory?'}},
+  {t:'pick',codes:['ShiftLeft'],emo:'🐢',txt:{ru:'Чем красться?',de:'Womit schleichst du?',en:'Which key sneaks?'}},
+  {t:'pick',codes:['KeyQ'],emo:'🫳',txt:{ru:'Чем выбросить предмет?',de:'Womit wirfst du etwas weg?',en:'Which key drops an item?'}},
+  {t:'pick',codes:['Slash'],emo:'✨',txt:{ru:'Секрет: какая клавиша в игре открывает команду «/»? Она внизу справа, рядом с точкой',de:'Geheimnis: welche Taste öffnet im Spiel den Befehl „/“? Unten rechts, neben dem Punkt',en:'Secret: which key opens the “/” command in the game? Bottom right, next to the dot'}},
+  {t:'pick',codes:['MetaLeft','MetaRight'],emo:'⛔',txt:{ru:'Найди опасную клавишу! Не нажимай — покажи мышкой',de:'Finde die gefährliche Taste! Nicht drücken — zeig mit der Maus',en:'Find the dangerous key! Don’t press it — click it on the picture'}},
+ ]},
+];
+
+/* ---------- sound & voice ---------- */
+let AC=null;
+function ac(){ if(!AC){ try{ AC=new (window.AudioContext||window.webkitAudioContext)() }catch(e){ AC=null } } if(AC&&AC.state==='suspended') AC.resume(); return AC }
+function beep(f=440,d=.08,type='square',vol=.05,slide=0){ if(!SOUND) return; const a=ac(); if(!a) return; const o=a.createOscillator(),g=a.createGain(),t=a.currentTime; o.type=type; o.frequency.setValueAtTime(f,t); if(slide) o.frequency.exponentialRampToValueAtTime(Math.max(40,f*slide),t+d); g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g).connect(a.destination); o.start(t); o.stop(t+d+.02) }
+function noise(d=.12,vol=.08,freq=900){ if(!SOUND) return; const a=ac(); if(!a) return; const len=Math.floor(a.sampleRate*d), b=a.createBuffer(1,len,a.sampleRate), ch=b.getChannelData(0); for(let i=0;i<len;i++) ch[i]=(Math.random()*2-1)*(1-i/len); const s=a.createBufferSource(), f=a.createBiquadFilter(), g=a.createGain(); s.buffer=b; f.type='bandpass'; f.frequency.value=freq; g.gain.value=vol; s.connect(f).connect(g).connect(a.destination); s.start() }
+const SFX={
+ ok(){[523,659,784].forEach((f,i)=>setTimeout(()=>beep(f,.13,'triangle',.08),i*90))},
+ win(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18,'triangle',.08),i*120))},
+ wrong(){beep(220,.14,'sine',.05,.7)},
+ brk(){noise(.16,.12,700)}, tick(){noise(.04,.05,1200)},
+ place(){beep(150,.09,'square',.06,.6)}, pop(){beep(880,.06,'sine',.06,1.6)},
+ jump(){beep(320,.1,'sine',.04,1.8)}, eat(){for(let i=0;i<3;i++) setTimeout(()=>noise(.06,.07,1500),i*130)},
+ click(){beep(700,.03,'square',.03)}, splash(){noise(.25,.08,500)}
+};
+let voices=[];
+function loadVoices(){ try{ voices=speechSynthesis.getVoices() }catch(e){} }
+if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices }
+function speak(text){
+ if(!SOUND||!('speechSynthesis' in window)||!text) return;
+ try{
+  speechSynthesis.cancel();
+  const clean=text.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE0F}\u{20E3}⌘⌃⌥⇧⇥⇪↩⌫]/gu,'').replace(/«|»|„|“|”/g,'');
+  const u=new SpeechSynthesisUtterance(clean); const lc={ru:'ru-RU',de:'de-DE',en:'en-US'}[LANG]; u.lang=lc; u.rate=.95;
+  const v=voices.find(v=>v.lang&&v.lang.replace('_','-').toLowerCase().startsWith(lc.slice(0,2))); if(v) u.voice=v;
+  setTimeout(()=>{ try{ speechSynthesis.speak(u) }catch(e){} },40);
+ }catch(e){}
+}
+
+/* ---------- pixel textures ---------- */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const TEX={}, ICON={};
+function mk(name,seed,draw){const c=document.createElement('canvas');c.width=c.height=16;const x=c.getContext('2d');draw(x,rng(seed));TEX[name]=c}
+function speck(x,r,base,cols,n){x.fillStyle=base;x.fillRect(0,0,16,16);for(let i=0;i<n;i++){x.fillStyle=cols[(r()*cols.length)|0];x.fillRect((r()*16)|0,(r()*16)|0,r()<.3?2:1,1)}}
+mk('grass',11,(x,r)=>speck(x,r,'#5fa83a',['#4f9630','#6fbd48','#57a034','#76c24e'],80));
+mk('dirt',12,(x,r)=>speck(x,r,'#8b5a2b',['#7a4d22','#9c6834','#6e4420'],80));
+mk('sand',13,(x,r)=>speck(x,r,'#dccf8f',['#cfc07c','#e8dea8','#d6c886'],60));
+mk('stone',14,(x,r)=>{speck(x,r,'#8b8b8b',['#7a7a7a','#9b9b9b','#6e6e6e'],90);x.fillStyle='#6a6a6a';x.fillRect(3,5,4,1);x.fillRect(10,11,3,1);x.fillRect(9,2,1,2)});
+mk('cobble',15,(x,r)=>{x.fillStyle='#595959';x.fillRect(0,0,16,16);const b=[[0,0,6,5],[7,0,9,4],[0,6,4,5],[5,5,6,6],[12,5,4,5],[0,12,7,4],[8,12,8,4],[12,11,4,1]];b.forEach(q=>{const g=110+((r()*40)|0);x.fillStyle=`rgb(${g},${g},${g})`;x.fillRect(q[0],q[1],q[2]-1,q[3]-1);x.fillStyle='rgba(255,255,255,.18)';x.fillRect(q[0],q[1],q[2]-1,1)})});
+mk('log',16,(x,r)=>{x.fillStyle='#5b3d1d';x.fillRect(0,0,16,16);x.fillStyle='#b0844a';x.fillRect(2,2,12,12);x.fillStyle='#8f6533';x.strokeStyle='#8f6533';x.lineWidth=1;x.strokeRect(4.5,4.5,7,7);x.fillRect(7,7,2,2);for(let i=0;i<10;i++){x.fillStyle='#4a3116';x.fillRect((r()*16)|0,r()<.5?0:15,1,1)}});
+mk('leaves',17,(x,r)=>speck(x,r,'#3d8b2a',['#2f6e20','#4ea036','#255a19','#2a6a1c'],120));
+mk('planks',18,(x,r)=>{x.fillStyle='#b48648';x.fillRect(0,0,16,16);x.fillStyle='#8f6835';[3,7,11,15].forEach(y=>x.fillRect(0,y,16,1));[[5,0],[12,4],[3,8],[10,12]].forEach(([a,b])=>x.fillRect(a,b,1,3));for(let i=0;i<20;i++){x.fillStyle=r()<.5?'#c29456':'#a57a3f';x.fillRect((r()*16)|0,(r()*16)|0,2,1)}});
+mk('glass',19,(x,r)=>{x.fillStyle='rgba(200,235,250,.45)';x.fillRect(0,0,16,16);x.strokeStyle='#eefaff';x.lineWidth=1;x.strokeRect(.5,.5,15,15);x.fillStyle='rgba(255,255,255,.8)';x.fillRect(3,3,1,1);x.fillRect(4,4,1,1);x.fillRect(5,5,1,1);x.fillRect(10,3,1,1)});
+mk('flower',20,(x,r)=>{x.drawImage(TEX.grass,0,0);x.fillStyle='#2f7a22';x.fillRect(7,8,1,5);x.fillStyle='#e0412f';[[6,5],[8,5],[5,6],[9,6],[6,7],[8,7],[7,4]].forEach(([a,b])=>x.fillRect(a,b,1,1));x.fillStyle='#f5d63d';x.fillRect(7,6,1,1)});
+mk('water0',21,(x,r)=>{x.fillStyle='#3a6fd8';x.fillRect(0,0,16,16);x.fillStyle='#5b8ff0';[[1,2,5],[9,5,6],[3,9,6],[10,13,4]].forEach(([a,b,w])=>x.fillRect(a,b,w,1))});
+mk('water1',22,(x,r)=>{x.fillStyle='#3a6fd8';x.fillRect(0,0,16,16);x.fillStyle='#5b8ff0';[[3,3,5],[1,7,5],[8,10,6],[2,14,5]].forEach(([a,b,w])=>x.fillRect(a,b,w,1))});
+mk('apple',23,(x,r)=>{x.clearRect(0,0,16,16);x.fillStyle='#c8231d';x.fillRect(4,5,8,8);x.fillRect(3,6,10,6);x.fillRect(5,13,6,1);x.fillStyle='#ef5b4f';x.fillRect(5,6,2,2);x.fillStyle='#5b3d1d';x.fillRect(7,2,1,3);x.fillStyle='#3d8b2a';x.fillRect(8,2,3,2)});
+['planks','cobble','glass','flower','log','leaves','sand','apple'].forEach(k=>{ try{ ICON[k]=TEX[k].toDataURL() }catch(e){ ICON[k]='' } });
+(function logo(){const c=$('#logo').getContext('2d');c.drawImage(TEX.dirt,0,0);c.drawImage(TEX.grass,0,0,16,5,0,0,16,5);c.fillStyle='#5fa83a';c.fillRect(2,5,2,2);c.fillRect(9,5,3,1);c.fillRect(13,5,1,2)})();
+$('#pad').style.backgroundImage=`url(${TEX.grass.toDataURL()})`;
+
+/* ---------- build keyboard ---------- */
+function buildKeyboard(){
+ const kb=$('#kbd'); kb.innerHTML='';
+ ROWS.forEach((row,ri)=>{
+  const r=document.createElement('div'); r.className='row'+(ri===0?' frow':'');
+  row.forEach(k=>{
+   if(k[0]==='ARROWS'){
+    const a=document.createElement('div'); a.className='arrows'; a.style.flex=`${k[2]} 1 0`;
+    a.append(keyEl('ArrowLeft','←',1)); const ud=document.createElement('div'); ud.className='ud'; ud.append(keyEl('ArrowUp','↑',1),keyEl('ArrowDown','↓',1)); a.append(ud); a.append(keyEl('ArrowRight','→',1)); r.append(a); return;
+   }
+   r.append(keyEl(k[0],k[1],k[2]||1,k[3]));
+  });
+  kb.append(r);
+ });
+}
+function keyEl(code,label,w,extra){
+ const d=document.createElement('div'); d.className='key'+(extra?' '+extra:''); d.dataset.code=code; d.style.flex=`${w} 1 0`;
+ const a=ACT[code]; if(a) d.classList.add('g-'+a.grp);
+ if(label.length>3) d.classList.add('small');
+ d.innerHTML=`<span class="kl">${label}</span>`+(a&&code!=='Enter'&&!(extra==='enterBot')?`<span class="ke">${a.emo}</span>`:'');
+ if(code==='Enter'&&extra==='enterBot'&&a) d.innerHTML=`<span class="ke">${a.emo}</span>`;
+ return d;
+}
+const keyEls=code=>$$(`#kbd [data-code="${code}"]`);
+function keyVis(code,on){ keyEls(code).forEach(e=>e.classList.toggle('down',on)) }
+function buildLegend(){ const L=U().legend; $('#legend').innerHTML=Object.keys(L).map(g=>`<span style="--c:var(--${g})">${L[g]}</span>`).join('') }
+
+/* ---------- i18n apply ---------- */
+function applyLang(){
+ document.documentElement.lang=LANG; document.title=U().title;
+ $$('[data-i]').forEach(e=>{ const v=U()[e.dataset.i]; if(typeof v==='string') e.textContent=v });
+ $$('#langs button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
+ $('#soundBtn').textContent=(SOUND?'🔊 ':'🔇 ')+U().sound;
+ buildLegend(); renderLevels(); if(TAB==='lessons') renderTask(false); if(TAB==='explore') showIntro();
+ buildWorldLegend(); renderTips(); $('#bGm').textContent=G&&G.creative?U().gmC:U().gmS;
+}
+$('#langs').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; LANG=b.dataset.l; store.set('lang',LANG); applyLang()});
+$('#soundBtn').addEventListener('click',()=>{SOUND=!SOUND; store.set('sound',SOUND); if(!SOUND) try{speechSynthesis.cancel()}catch(e){} applyLang()});
+
+/* ---------- tabs ---------- */
+function setTab(t){
+ TAB=t; store.set('tab',t);
+ $$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+ $$('.panel').forEach(p=>p.classList.toggle('hidden',p.id!=='p-'+t));
+ $('#kbdWrap').classList.toggle('hidden',!(t==='explore'||t==='lessons'));
+ clearHints();
+ if(t==='explore') showIntro();
+ if(t==='lessons') renderTask(false);
+ if(t==='world'){ ensureGame(); fitCanvas(); }
+ releaseAll();
+}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) setTab(b.dataset.t)});
+
+/* ---------- explore ---------- */
+function showIntro(){
+ $('#info').innerHTML=`<div class="emoBig">⌨️</div><div><div class="infoTitle">${U().pressAny}</div><div class="infoNote">${U().pressAnySub}</div></div><div></div>`;
+}
+function showInfo(code){
+ const a=ACT[code]; const label=keyName(code)||'?';
+ let note='';
+ if(/^F\d+$/.test(code)) note=U().fnNote;
+ if(code==='Slash') note=U().slashNote;
+ if(code==='MetaLeft'||code==='MetaRight') note=U().dangerNote;
+ if(code==='ControlLeft') note=U().ctrlNote;
+ const g=a?`var(--${a.grp})`:'var(--muted)';
+ $('#info').innerHTML=`<div class="bigkey" style="--g:${g}">${label}</div><div><div class="infoTitle">${a?`${a.emo} ${tr(a.txt)}`:U().notUsed}</div>${note?`<div class="infoNote">${note}</div>`:''}</div><button class="say" title="🔊">🔊</button>`;
+ const say=(a?tr(a.txt):U().notUsed)+(note&&code!=='ControlLeft'?'. '+note:'');
+ $('#info .say').onclick=()=>speak(say);
+ speak(say);
+}
+function showMouseInfo(k){
+ const m=MOUSE[k];
+ $('#info').innerHTML=`<div class="bigkey" style="--g:var(--${m[2]})">🖱️</div><div><div class="infoTitle">${m[0]} ${tr(m[1])}</div></div><button class="say">🔊</button>`;
+ $('#info .say').onclick=()=>speak(tr(m[1])); speak(tr(m[1]));
+}
+
+/* ---------- lessons ---------- */
+let prog=store.get('prog',{}); // lessonId -> true
+const L={li:store.get('li',0),ti:0,lock:false,hold:0,wheel:0,lastWheel:0,lastW:0,wArmed:false,finished:false};
+if(!LESSONS[L.li]) L.li=0;
+function renderLevels(){
+ $('#levels').innerHTML=LESSONS.map((l,i)=>`<button class="lvl${i===L.li?' on':''}" data-li="${i}"><span class="em">${l.emo}</span><span>${i+1}. ${tr(l.name)}<span class="stars">${prog[l.id]?'⭐⭐⭐':'☆☆☆'}</span></span></button>`).join('');
+}
+$('#levels').addEventListener('click',e=>{const b=e.target.closest('.lvl'); if(!b) return; L.li=+b.dataset.li; store.set('li',L.li); L.ti=0; L.finished=false; renderLevels(); renderTask(true)});
+function clearHints(){ $$('.hint').forEach(e=>e.classList.remove('hint')) }
+function curTask(){ return LESSONS[L.li].tasks[L.ti] }
+function renderTask(say=true){
+ clearHints(); L.hold=0; L.wheel=0; L.lock=false; L.wArmed=false;
+ const les=LESSONS[L.li];
+ if(L.finished){ return renderDone() }
+ const t=curTask();
+ const dots=les.tasks.map((_,i)=>`<i class="${i<L.ti?'ok':''}${i===L.ti?' cur':''}"></i>`).join('');
+ const needBar=t.t==='hold'||t.t==='mhold';
+ const sub=t.sub?tr(t.sub):(needBar?U().holdHint:(t.fn?U().fnNote:''));
+ $('#taskCard').innerHTML=`<div id="task"><div class="taskEmo">${t.emo||les.emo}</div><div><div class="taskTxt">${tr(t.txt)}</div><div class="taskSub" id="tsub">${sub}</div>${needBar?'<div class="bar"><b id="hbar"></b></div>':''}<div class="dots">${dots}</div></div><div class="tbtns"><button class="say" id="tsay">🔊</button><button class="btn" id="tskip">${U().skip}</button></div></div>`;
+ $('#tsay').onclick=()=>speak(tr(t.txt)); $('#tskip').onclick=()=>taskDone(true);
+ if(t.t!=='pick'){ (t.codes||[]).forEach(c=>keyEls(c).forEach(e=>e.classList.add('hint'))) }
+ if(t.t==='mouse'||t.t==='mhold'){ $(`#mouseSvg [data-m="${t.btn}"]`).classList.add('hint'); $('#pad').classList.add('hint') }
+ if(t.t==='wheel'){ $('#mouseSvg [data-m="1"]').classList.add('hint'); $('#pad').classList.add('hint') }
+ if(say) speak(tr(t.txt));
+}
+function renderDone(){
+ const last=L.li>=LESSONS.length-1, all=LESSONS.every(l=>prog[l.id]);
+ $('#taskCard').innerHTML=`<div class="done"><div class="big">🏆</div><h2>${all?U().allDone:U().levelDone}</h2><button class="btn" id="dAgain">${U().again}</button> ${last?`<button class="btn main" id="dWorld">${U().toWorld}</button>`:`<button class="btn main" id="dNext">${U().next}</button>`}</div>`;
+ $('#dAgain').onclick=()=>{L.ti=0;L.finished=false;renderTask(true)};
+ if($('#dNext')) $('#dNext').onclick=()=>{L.li++;store.set('li',L.li);L.ti=0;L.finished=false;renderLevels();renderTask(true)};
+ if($('#dWorld')) $('#dWorld').onclick=()=>setTab('world');
+}
+function praise(){ const p=$('#praise'); const arr=U().praise; p.textContent=arr[(Math.random()*arr.length)|0]+' ⭐'; p.classList.add('show'); clearTimeout(p._t); p._t=setTimeout(()=>p.classList.remove('show'),800) }
+function taskDone(skipped){
+ if(L.lock||L.finished) return; L.lock=true;
+ if(!skipped){ SFX.ok(); praise() }
+ const les=LESSONS[L.li];
+ setTimeout(()=>{
+  L.ti++;
+  if(L.ti>=les.tasks.length){ prog[les.id]=true; store.set('prog',prog); L.finished=true; SFX.win(); renderLevels(); renderDone(); speak(U().levelDone) }
+  else renderTask(true);
+ },skipped?50:850);
+}
+function wrongHint(label,act){ const s=$('#tsub'); if(!s) return; s.textContent=U().wrong(label,act); SFX.wrong() }
+function lessonKey(code,first){
+ if(L.finished||L.lock) return; const t=curTask();
+ if(t.t==='key'&&first){ if(t.codes.includes(code)) return taskDone(); const a=ACT[code]; return wrongHint(keyName(code),a?tr(a.txt):'') }
+ if(t.t==='sprintjump'){
+  if(code==='KeyW'&&first){ const now=performance.now(); if(now-L.lastW<400) L.wArmed=true; L.lastW=now }
+  if(code==='Space'&&first&&down.has('KeyW')&&(L.wArmed||down.has('ControlLeft'))) taskDone();
+ }
+}
+function lessonTick(dt){
+ if(TAB!=='lessons'||L.finished||L.lock) return; const t=curTask(); let ok=false;
+ if(t.t==='hold') ok=t.codes.every(c=>down.has(c));
+ else if(t.t==='mhold') ok=padDown[0];
+ else return;
+ L.hold=ok?L.hold+dt*1000:0;
+ const b=$('#hbar'); if(b) b.style.width=Math.min(100,L.hold/t.ms*100)+'%';
+ if(t.t==='mhold') $('#crack').style.background=`rgba(0,0,0,${Math.min(.6,L.hold/t.ms*.6)})`;
+ if(L.hold>=t.ms){ if(t.t==='mhold'){ SFX.brk(); $('#crack').style.background='rgba(0,0,0,0)' } taskDone() }
+}
+$('#kbd').addEventListener('click',e=>{
+ const k=e.target.closest('.key'); if(!k) return; const code=k.dataset.code;
+ if(TAB==='explore'){ showInfo(code); keyVis(code,true); setTimeout(()=>keyVis(code,false),200) }
+ if(TAB==='lessons'&&!L.finished&&!L.lock){ const t=curTask(); if(t.t==='pick'){ if(t.codes.includes(code)) taskDone(); else { const a=ACT[code]; wrongHint(keyName(code),a?tr(a.txt):'') } } }
+});
+
+/* ---------- pad + mouse svg ---------- */
+const padDown={0:false,1:false,2:false};
+function mouseVis(b,on){ const el=$(`#mouseSvg [data-m="${b}"]`); if(el) el.classList.toggle('down',on) }
+$('#pad').addEventListener('mousedown',e=>{
+ e.preventDefault(); const b=e.button; if(b>2) return; padDown[b]=true; mouseVis(b,true); ac();
+ if(TAB==='explore') showMouseInfo(b);
+ if(TAB==='lessons'&&!L.finished&&!L.lock){ const t=curTask();
+  if(t.t==='mouse'){ if(t.btn===b){ if(b===0) SFX.tick(); if(b===2) SFX.place(); taskDone() } else wrongHint(tr(MNAME[b]),tr(MOUSE[b][1])) }
+  else if(t.t==='mhold'&&b===0) SFX.tick();
+ }
+});
+document.addEventListener('mouseup',e=>{ padDown[e.button]=false; mouseVis(e.button,false); if(G) G.mb[e.button]=false; $('#crack').style.background='rgba(0,0,0,0)' });
+$('#pad').addEventListener('contextmenu',e=>e.preventDefault());
+$('#kbdWrap').addEventListener('contextmenu',e=>e.preventDefault());
+$('#pad').addEventListener('wheel',e=>{
+ e.preventDefault(); const now=performance.now(); if(now-L.lastWheel<140) return; L.lastWheel=now;
+ const w=$('#mouseSvg [data-m="1"]'); w.classList.add('down'); setTimeout(()=>w.classList.remove('down'),150);
+ if(TAB==='explore') showMouseInfo('wheel');
+ if(TAB==='lessons'&&!L.finished&&!L.lock){ const t=curTask(); if(t.t==='wheel'){ L.wheel++; SFX.click(); $('#tsub').textContent='🔄 '+L.wheel+' / '+t.n; if(L.wheel>=t.n) taskDone() } }
+},{passive:false});
+$('#mouseSvg').addEventListener('click',e=>{ const m=e.target.closest('[data-m]'); if(!m||m.dataset.m==='body') return; if(TAB==='explore') showMouseInfo(m.dataset.m) });
+
+/* ---------- global keys ---------- */
+const down=new Set();
+function releaseAll(){ down.forEach(c=>keyVis(c,false)); down.clear(); if(G){ G.mb={0:false,1:false,2:false}; hidePlayers() } }
+window.addEventListener('blur',releaseAll);
+document.addEventListener('keydown',e=>{
+ if(e.target===$('#chatIn')) return;
+ if(e.target.tagName==='INPUT') return;
+ ac();
+ const code=e.code||'';
+ if(e.metaKey){ // let macOS/browser shortcuts through
+  if(code.startsWith('Meta')){ down.add(code); keyVis(code,true); if(TAB==='explore') showInfo(code) }
+  return;
+ }
+ if(TAB!=='parents') e.preventDefault();
+ const first=!down.has(code); down.add(code); keyVis(code,true);
+ if(TAB==='explore'&&first) showInfo(code);
+ else if(TAB==='lessons') lessonKey(code,first);
+ else if(TAB==='world') worldKey(e,code,first);
+});
+document.addEventListener('keyup',e=>{
+ const code=e.code||'';
+ down.delete(code); keyVis(code,false);
+ if(code.startsWith('Meta')) releaseAll(); // macOS drops keyups while ⌘ is held
+ if(code==='KeyW'){ L.wArmed=false; if(G) G.wSprint=false }
+ if(code==='Tab') hidePlayers();
+});
+
+/* =========================================================
+   WORLD — top-down mini Minecraft
+   ========================================================= */
+const WALK={grass:1,sand:1,dirt:1,flower:1,water:1};
+const BRK={stone:1.3,cobble:1.3,log:1.1,planks:.9,leaves:.3,glass:.3,flower:.1,sand:.5};
+const DROP={stone:'cobble',cobble:'cobble',log:'log',planks:'planks',leaves:'leaves',glass:null,flower:'flower',sand:'sand'};
+const AFTER={stone:'grass',cobble:'grass',log:'grass',planks:'grass',leaves:'grass',glass:'grass',flower:'grass',sand:'dirt'};
+const PLACE={planks:'planks',cobble:'cobble',glass:'glass',flower:'flower',log:'log',leaves:'leaves',sand:'sand'};
+const PICK={stone:'cobble',cobble:'cobble',log:'log',planks:'planks',leaves:'leaves',glass:'glass',flower:'flower',sand:'sand'};
+const ITEM={planks:{ru:'Доски',de:'Bretter',en:'Planks'},cobble:{ru:'Булыжник',de:'Bruchstein',en:'Cobblestone'},glass:{ru:'Стекло',de:'Glas',en:'Glass'},flower:{ru:'Цветок',de:'Blume',en:'Flower'},log:{ru:'Бревно',de:'Stamm',en:'Log'},leaves:{ru:'Листва',de:'Laub',en:'Leaves'},sand:{ru:'Песок',de:'Sand',en:'Sand'},apple:{ru:'Яблоко',de:'Apfel',en:'Apple'}};
+const BLOCKNAME={grass:{ru:'трава',de:'Gras',en:'grass'},dirt:{ru:'земля',de:'Erde',en:'dirt'},water:{ru:'вода',de:'Wasser',en:'water'},stone:{ru:'камень',de:'Stein',en:'stone'}};
+const ADV=[
+ ['first','⛏️',{ru:'Первый блок!',de:'Erster Block!',en:'First block!'},{ru:'Сломай любой блок',de:'Bau einen Block ab',en:'Break any block'}],
+ ['wood','🪵',{ru:'Дровосек',de:'Holzfäller',en:'Lumberjack'},{ru:'Добудь 5 брёвен',de:'Sammle 5 Stämme',en:'Get 5 logs'}],
+ ['build','🧱',{ru:'Строитель',de:'Baumeister',en:'Builder'},{ru:'Поставь 10 блоков',de:'Setz 10 Blöcke',en:'Place 10 blocks'}],
+ ['bridge','🌉',{ru:'Мост через воду',de:'Brücke übers Wasser',en:'Bridge'},{ru:'Поставь блок в воду',de:'Setz einen Block ins Wasser',en:'Place a block in water'}],
+ ['swim','🌊',{ru:'Пловец',de:'Schwimmer',en:'Swimmer'},{ru:'Зайди в воду',de:'Geh ins Wasser',en:'Go into water'}],
+ ['sneak','🐢',{ru:'Тихоня',de:'Leisetreter',en:'Sneaky'},{ru:'Крадись у воды — и не упадёшь',de:'Schleich am Wasser — du fällst nicht rein',en:'Sneak at the water’s edge'}],
+ ['run','⚡',{ru:'Бегун',de:'Sprinter',en:'Runner'},{ru:'Пробеги 30 блоков',de:'Sprinte 30 Blöcke',en:'Sprint 30 blocks'}],
+ ['jump','🦘',{ru:'Попрыгунчик',de:'Hüpfer',en:'Jumper'},{ru:'Прыгни 10 раз',de:'Spring 10 Mal',en:'Jump 10 times'}],
+ ['eat','🍎',{ru:'Приятного аппетита',de:'Guten Appetit',en:'Bon appétit'},{ru:'Съешь яблоко: правая кнопка',de:'Iss einen Apfel: rechte Taste',en:'Eat an apple: right button'}],
+ ['bag','🎒',{ru:'Что в рюкзаке?',de:'Was ist im Rucksack?',en:'What’s in the bag?'},{ru:'Открой рюкзак: E',de:'Öffne das Inventar: E',en:'Open the inventory: E'}],
+ ['drop','🫳',{ru:'Держи!',de:'Fang!',en:'Catch!'},{ru:'Выброси и подбери предмет: Q',de:'Wirf etwas weg und heb es auf: Q',en:'Drop an item and pick it up: Q'}],
+ ['chat','💬',{ru:'Привет всем!',de:'Hallo zusammen!',en:'Hello everyone!'},{ru:'Напиши в чат: T',de:'Schreib in den Chat: T',en:'Write in chat: T'}],
+ ['cmd','✨',{ru:'Волшебник',de:'Zauberer',en:'Wizard'},{ru:'Команда, например /time set night',de:'Ein Befehl, z. B. /time set night',en:'A command, e.g. /time set night'}],
+ ['where','📍',{ru:'Где я?',de:'Wo bin ich?',en:'Where am I?'},{ru:'Открой координаты: fn + F3',de:'Koordinaten zeigen: fn + F3',en:'Show coordinates: fn + F3'}],
+];
+let G=null;
+const cv=$('#cv'), ctx=cv.getContext('2d');
+let DPR=1, CW=800, CH=480;
+function playerName(){ return store.get('name','')||({ru:'Саша',de:'Sascha',en:'Sasha'}[LANG]) }
+
+function valueNoise(r,C,R,scale){
+ const gw=Math.ceil(C/scale)+2, gh=Math.ceil(R/scale)+2, g=[]; for(let i=0;i<gw*gh;i++) g.push(r());
+ const s=t=>t*t*(3-2*t);
+ return (x,y)=>{ const fx=x/scale, fy=y/scale, ix=Math.floor(fx), iy=Math.floor(fy), u=s(fx-ix), v=s(fy-iy);
+  const a=g[iy*gw+ix], b=g[iy*gw+ix+1], c=g[(iy+1)*gw+ix], d=g[(iy+1)*gw+ix+1];
+  return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v };
+}
+function genWorld(seed){
+ const r=rng(seed), C=64, R=44, g=new Array(C*R);
+ const nW=valueNoise(r,C,R,8), nS=valueNoise(r,C,R,7);
+ for(let y=0;y<R;y++) for(let x=0;x<C;x++){ const w=nW(x,y), s=nS(x,y); g[y*C+x]= w<.3?'water': s>.7?'stone':'grass' }
+ const at=(x,y)=>(x<0||y<0||x>=C||y>=R)?null:g[y*C+x];
+ const g2=g.slice();
+ for(let y=0;y<R;y++) for(let x=0;x<C;x++){ if(g[y*C+x]!=='grass') continue; let wet=false; for(let dy=-1;dy<=1;dy++) for(let dx=-1;dx<=1;dx++) if(at(x+dx,y+dy)==='water') wet=true; if(wet) g2[y*C+x]='sand' }
+ for(let i=0;i<g.length;i++) g[i]=g2[i];
+ for(let y=1;y<R-1;y++) for(let x=1;x<C-1;x++){
+  if(r()<.03){ let ok=true; for(let dy=-1;dy<=1;dy++) for(let dx=-1;dx<=1;dx++) if(at(x+dx,y+dy)!=='grass') ok=false;
+   if(ok){ for(let dy=-1;dy<=1;dy++) for(let dx=-1;dx<=1;dx++) if((dx||dy)&&r()<.8) g[(y+dy)*C+x+dx]='leaves'; g[y*C+x]='log' } }
+ }
+ for(let i=0;i<g.length;i++) if(g[i]==='grass'&&r()<.04) g[i]='flower';
+ const sx=C>>1, sy=R>>1;
+ for(let dy=-3;dy<=3;dy++) for(let dx=-3;dx<=3;dx++) g[(sy+dy)*C+sx+dx]='grass';
+ // guarantee a pond and a tree near spawn for the first lessons
+ for(let dy=0;dy<3;dy++) for(let dx=0;dx<4;dx++) g[(sy+5+dy)*C+sx+3+dx]='water';
+ for(let dx=-1;dx<=4;dx++){ if(g[(sy+4)*C+sx+3+dx]!=='water') g[(sy+4)*C+sx+3+dx]='sand' }
+ g[(sy-5)*C+sx-4]='log'; [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[1,1]].forEach(([dx,dy])=>g[(sy-5+dy)*C+sx-4+dx]='leaves');
+ return {C,R,g,spawn:{x:sx+.5,y:sy+.5}};
+}
+function newGame(){
+ const w=genWorld((Date.now()%1e6)|0);
+ G={...w,p:{x:w.spawn.x,y:w.spawn.y,face:{x:0,y:1},jumpT:0,sneak:false,sprint:false,inWater:false,walkT:0},
+  hot:[{i:'planks',n:16},{i:'cobble',n:16},{i:'glass',n:8},{i:'flower',n:4},{i:'apple',n:3},null,null,null,null],
+  inv:Array(27).fill(null),off:null,sel:0,hunger:17,hTimer:0,creative:false,night:false,rain:false,hud:true,debug:false,zoomI:0,
+  drops:[],parts:[],rainP:[],mine:{idx:-1,prog:0,tick:0},placeCD:0,overlay:null,mb:{0:false,1:false,2:false},mouse:null,
+  stats:{placed:0,logs:0,jumps:0,run:0},adv:store.get('adv',{}),msgs:[],toasts:[],flash:0,nameT:0,lastWTap:0,wSprint:false,invPick:null,time:0};
+ G.inv[0]={i:'log',n:8};G.inv[1]={i:'sand',n:16};G.inv[2]={i:'leaves',n:8};G.inv[3]={i:'apple',n:5};
+ closeOverlays(); $('#bGm').textContent=U().gmS;
+ msg(U().worldIntro,'#ffe066');
+}
+function ensureGame(){ if(!G) newGame() }
+function fitCanvas(){
+ const box=$('#worldBox'); if(!box.offsetWidth) return;
+ DPR=Math.min(2,window.devicePixelRatio||1); CW=box.clientWidth; CH=Math.round(Math.max(320,Math.min(620,window.innerHeight-230)));
+ cv.style.height=CH+'px'; cv.width=Math.round(CW*DPR); cv.height=Math.round(CH*DPR);
+}
+window.addEventListener('resize',()=>{ if(TAB==='world') fitCanvas() });
+
+const cellAt=(x,y)=>{ const tx=Math.floor(x), ty=Math.floor(y); if(tx<0||ty<0||tx>=G.C||ty>=G.R) return null; return G.g[ty*G.C+tx] };
+function canBe(x,y){ const h=.3; for(const [cx,cy] of [[x-h,y-h],[x+h,y-h],[x-h,y+h],[x+h,y+h]]){ const t=cellAt(cx,cy); if(!t||!WALK[t]) return false } return true }
+function zoom(){ return [1,.62,1.45][G.zoomI] }
+function T(){ return 34*zoom() }
+function target(){
+ if(!G.mouse) return null; const t=T();
+ const wx=G.p.x+(G.mouse.x-CW/2)/t, wy=G.p.y+(G.mouse.y-CH/2)/t;
+ const tx=Math.floor(wx), ty=Math.floor(wy); if(tx<0||ty<0||tx>=G.C||ty>=G.R) return null;
+ const d=Math.hypot(tx+.5-G.p.x,ty+.5-G.p.y);
+ return {tx,ty,idx:ty*G.C+tx,t:G.g[ty*G.C+tx],reach:d<=4.6};
+}
+function msg(text,col){ G.msgs.push({text,col:col||'#fff',t:performance.now()}); if(G.msgs.length>30) G.msgs.shift() }
+function toast(title,sub,icon){ G.toasts.push({title,sub,icon,t:3.2}) }
+function unlock(id){
+ if(!G||G.adv[id]) return; G.adv[id]=true; store.set('adv',G.adv);
+ const a=ADV.find(a=>a[0]===id); if(!a) return; toast(U().advGot,tr(a[2]),a[1]); SFX.win();
+}
+function give(item,n){
+ const lists=[G.hot,G.inv];
+ for(const L of lists) for(const s of L) if(s&&s.i===item&&s.n<64){ const k=Math.min(64-s.n,n); s.n+=k; n-=k; if(!n) return true }
+ for(const L of lists) for(let i=0;i<L.length;i++) if(!L[i]){ L[i]={i:item,n:Math.min(64,n)}; n-=Math.min(64,n); if(!n) return true }
+ toast(U().full,'','🎒'); return false;
+}
+function selItem(){ return G.hot[G.sel] }
+function selectSlot(i){ G.sel=(i+9)%9; G.nameT=1.8; SFX.click() }
+function breakCell(tg){
+ const t=tg.t, drop=DROP[t];
+ G.g[tg.idx]=AFTER[t]; SFX.brk();
+ const col={stone:'#8b8b8b',cobble:'#777',log:'#8f6533',planks:'#b48648',leaves:'#3d8b2a',glass:'#cfe9f5',flower:'#e0412f',sand:'#dccf8f'}[t]||'#999';
+ for(let i=0;i<10;i++) G.parts.push({x:tg.tx+.5,y:tg.ty+.5,vx:(Math.random()-.5)*4,vy:(Math.random()-.5)*4,life:.5+Math.random()*.3,col});
+ if(!G.creative){ if(drop) give(drop,1); if(t==='leaves'&&Math.random()<.2){ give('apple',1); SFX.pop() } }
+ if(t==='log'){ G.stats.logs++; if(G.stats.logs>=5) unlock('wood') }
+ unlock('first');
+}
+function placeBlock(){
+ const s=selItem(); if(!s) return;
+ if(s.i==='apple'){ if(G.hunger<20||G.creative){ G.hunger=Math.min(20,G.hunger+4); if(!G.creative){ s.n--; if(!s.n) G.hot[G.sel]=null } SFX.eat(); unlock('eat') } return }
+ const tg=target(); if(!tg||!tg.reach) return;
+ if(!['grass','sand','dirt','water'].includes(tg.t)) return;
+ if(s.i==='flower'&&tg.t==='water') return;
+ if(Math.abs(G.p.x-(tg.tx+.5))<.8&&Math.abs(G.p.y-(tg.ty+.5))<.8) return;
+ if(tg.t==='water') unlock('bridge');
+ G.g[tg.idx]=PLACE[s.i]; SFX.place();
+ if(!G.creative){ s.n--; if(!s.n) G.hot[G.sel]=null }
+ G.stats.placed++; if(G.stats.placed>=10) unlock('build');
+}
+function pickBlock(){
+ const tg=target(); if(!tg) return; const it=PICK[tg.t]; if(!it) return;
+ const i=G.hot.findIndex(s=>s&&s.i===it);
+ if(i>=0){ selectSlot(i); return }
+ if(G.creative){ G.hot[G.sel]={i:it,n:64}; G.nameT=1.8; SFX.pop() }
+}
+function dropItem(all){
+ const s=selItem(); if(!s) return; const n=all?s.n:1; s.n-=n; if(!s.n) G.hot[G.sel]=null;
+ let x=G.p.x+G.p.face.x*1.3, y=G.p.y+G.p.face.y*1.3; if(!canBe(x,y)){ x=G.p.x; y=G.p.y }
+ G.drops.push({x,y,i:s.i,n,age:0}); SFX.jump();
+}
+function closeOverlays(){ ['#ovPause','#ovInv','#ovAdv'].forEach(s=>$(s).classList.add('hidden')); $('#chatBar').classList.add('hidden'); if(G){ G.overlay=null; G.invPick=null } }
+function openOverlay(name){
+ closeOverlays(); G.overlay=name; releaseMove();
+ if(name==='pause') $('#ovPause').classList.remove('hidden');
+ if(name==='inv'){ renderInv(); $('#ovInv').classList.remove('hidden'); unlock('bag') }
+ if(name==='adv'){ renderAdv(); $('#ovAdv').classList.remove('hidden') }
+ if(name==='chat'){ $('#chatBar').classList.remove('hidden') }
+}
+function releaseMove(){ ['KeyW','KeyA','KeyS','KeyD','Space','ShiftLeft','ControlLeft'].forEach(c=>{down.delete(c);keyVis(c,false)}); G.mb={0:false,1:false,2:false} }
+function openChat(prefill){
+ openOverlay('chat'); const i=$('#chatIn'); i.value=prefill||''; setTimeout(()=>{ i.focus(); i.setSelectionRange(i.value.length,i.value.length) },0);
+}
+function slotHTML(s,extra,num){ return `<div class="slot${extra||''}">${num?`<span class="num">${num}</span>`:''}${s?`<img src="${ICON[s.i]}" alt=""><b>${s.n>1?s.n:''}</b>`:''}</div>` }
+function renderInv(){
+ const pk=G.invPick;
+ $('#invMain').innerHTML=G.inv.map((s,i)=>slotHTML(s,pk&&pk[0]==='inv'&&pk[1]===i?' pick':'').replace('class="slot','data-l="inv" data-i="'+i+'" class="slot')).join('');
+ $('#invHot').innerHTML=G.hot.map((s,i)=>slotHTML(s,(i===G.sel?' sel':'')+(pk&&pk[0]==='hot'&&pk[1]===i?' pick':''),i+1).replace('class="slot','data-l="hot" data-i="'+i+'" class="slot')).join('');
+ const off=$('#invOff'); off.dataset.l='off'; off.dataset.i='0'; off.className='slot'+(pk&&pk[0]==='off'?' pick':''); off.innerHTML=G.off?`<img src="${ICON[G.off.i]}" alt=""><b>${G.off.n>1?G.off.n:''}</b>`:'';
+}
+function slotRef(l,i){ return l==='inv'?[G.inv,i]:l==='hot'?[G.hot,i]:null }
+$('#ovInv').addEventListener('mousedown',e=>{
+ const el=e.target.closest('.slot[data-l]'); if(!el) return; e.preventDefault(); SFX.click();
+ const cur=[el.dataset.l,+el.dataset.i];
+ if(!G.invPick){ G.invPick=cur; renderInv(); return }
+ const get=([l,i])=>l==='off'?G.off:slotRef(l,i)[0][i];
+ const set=([l,i],v)=>{ if(l==='off') G.off=v; else slotRef(l,i)[0][i]=v };
+ const a=get(G.invPick), b=get(cur); set(G.invPick,b); set(cur,a); G.invPick=null; renderInv();
+});
+$('#ovInv').addEventListener('contextmenu',e=>e.preventDefault());
+function renderAdv(){ $('#advList').innerHTML=ADV.map(a=>`<div class="${G.adv[a[0]]?'got':''}"><span>${G.adv[a[0]]?a[1]:'🔒'}</span><div>${tr(a[2])}<small>${tr(a[3])}</small></div></div>`).join('') }
+function showPlayers(){ if(G.overlay) return; $('#playersList').innerHTML=`<b>${U().players}</b><br>🟢 ${escapeHTML(playerName())} (${U().you})`; $('#ovPlayers').classList.remove('hidden') }
+function hidePlayers(){ $('#ovPlayers').classList.add('hidden') }
+function escapeHTML(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])) }
+$('#bResume').onclick=()=>closeOverlays();
+$('#bNew').onclick=()=>{ newGame(); };
+$('#bGm').onclick=()=>{ G.creative=!G.creative; $('#bGm').textContent=G.creative?U().gmC:U().gmS; msg(G.creative?U().gmOnC:U().gmOnS,'#ffe066') };
+$('#bAdvClose').onclick=()=>closeOverlays();
+
+function lastKey(code,label,act,grp){
+ $('#lastKey').innerHTML=`${U().lastKey} <kbd style="font:800 16px ui-rounded,system-ui;padding:2px 8px;border-radius:6px;border:1px solid var(--${grp||'muted'});border-bottom-width:3px;background:color-mix(in srgb,var(--${grp||'muted'}) 22%,var(--keybg))">${label}</kbd> ${act||''}`;
+ $$('.wl').forEach(w=>w.classList.toggle('lit',w.dataset.k===code));
+}
+function worldKey(e,code,first){
+ ensureGame();
+ const a=ACT[code]; lastKey(code,keyName(code),a?a.emo+' '+tr(a.txt):'',a&&a.grp);
+ if(code==='Escape'){ if(G.overlay) closeOverlays(); else openOverlay('pause'); return }
+ if(code==='KeyE'&&first){ if(G.overlay==='inv') closeOverlays(); else if(!G.overlay) openOverlay('inv'); return }
+ if(code==='KeyL'&&first){ if(G.overlay==='adv') closeOverlays(); else if(!G.overlay) openOverlay('adv'); return }
+ if(G.overlay) return;
+ if(!first) return;
+ if(/^Digit[1-9]$/.test(code)){ selectSlot(+code.slice(5)-1); return }
+ switch(code){
+  case 'Space': if(G.p.jumpT<=0){ G.p.jumpT=.5; G.stats.jumps++; SFX.jump(); if(G.stats.jumps>=10) unlock('jump') } break;
+  case 'KeyW': { const now=performance.now(); if(now-G.lastWTap<350) G.wSprint=true; G.lastWTap=now; break }
+  case 'KeyQ': dropItem(e.ctrlKey); break;
+  case 'KeyF': { const t=G.hot[G.sel]; G.hot[G.sel]=G.off; G.off=t; SFX.click(); break }
+  case 'KeyT': openChat(''); break;
+  case 'Slash': openChat('/'); break;
+  case 'Tab': showPlayers(); break;
+  case 'F1': G.hud=!G.hud; break;
+  case 'F2': G.flash=1; toast(U().shot,'','📸'); SFX.click(); break;
+  case 'F3': G.debug=!G.debug; if(G.debug) unlock('where'); break;
+  case 'F5': G.zoomI=(G.zoomI+1)%3; toast(U().cam[G.zoomI],'','🎥'); break;
+ }
+}
+$('#chatIn').addEventListener('keydown',e=>{
+ e.stopPropagation();
+ if(e.key==='Escape'){ e.preventDefault(); closeOverlays(); return }
+ if(e.key==='Tab') e.preventDefault();
+ if(e.key==='Enter'){ e.preventDefault(); const v=$('#chatIn').value.trim(); closeOverlays(); if(v) chatSend(v) }
+});
+function chatSend(v){
+ if(v[0]!=='/'){ msg(`<${playerName()}> ${v}`); unlock('chat'); return }
+ const c=v.toLowerCase().replace(/\s+/g,' ');
+ const ok=t=>{ msg(t,'#ffe066'); unlock('cmd') };
+ if(c==='/help'||c==='/?') msg(U().chatHelp,'#aaa');
+ else if(c==='/time set day'||c==='/time set noon'){ G.night=false; ok(U().dayOn) }
+ else if(c==='/time set night'||c==='/time set midnight'){ G.night=true; ok(U().nightOn) }
+ else if(c==='/weather rain'||c==='/weather thunder'){ G.rain=true; ok(U().rainOn) }
+ else if(c==='/weather clear'){ G.rain=false; ok(U().rainOff) }
+ else if(/^\/gamemode (creative|c|1)$/.test(c)){ G.creative=true; $('#bGm').textContent=U().gmC; ok(U().gmOnC) }
+ else if(/^\/gamemode (survival|s|0)$/.test(c)){ G.creative=false; $('#bGm').textContent=U().gmS; ok(U().gmOnS) }
+ else msg(U().unknownCmd,'#ff8080');
+}
+cv.addEventListener('mousemove',e=>{ if(!G) return; const r=cv.getBoundingClientRect(); G.mouse={x:e.clientX-r.left,y:e.clientY-r.top} });
+cv.addEventListener('mouseleave',()=>{ if(G) G.mouse=null });
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+cv.addEventListener('mousedown',e=>{
+ e.preventDefault(); ensureGame(); ac(); const r=cv.getBoundingClientRect(); G.mouse={x:e.clientX-r.left,y:e.clientY-r.top};
+ if(G.overlay==='chat') closeOverlays();
+ if(G.overlay) return;
+ const b=e.button; G.mb[b]=true; lastKey('mouse'+b,'🖱️ '+tr(MNAME[b]||MNAME[0]),MOUSE[b]?MOUSE[b][0]+' '+tr(MOUSE[b][1]):'',MOUSE[b]&&MOUSE[b][2]);
+ if(b===2){ placeBlock(); G.placeCD=.3 }
+ if(b===1) pickBlock();
+});
+cv.addEventListener('wheel',e=>{
+ e.preventDefault(); if(!G||G.overlay) return; const now=performance.now(); if(now-(G._wh||0)<90) return; G._wh=now;
+ selectSlot(G.sel+(e.deltaY>0?1:-1)); lastKey('wheel','🖱️ 🔄',tr(MOUSE.wheel[1]),'view');
+},{passive:false});
+
+function update(dt){
+ const p=G.p; G.time+=dt;
+ if(G.overlay==='pause') return;
+ let ix=0,iy=0;
+ if(!G.overlay){ ix=(down.has('KeyD')?1:0)-(down.has('KeyA')?1:0); iy=(down.has('KeyS')?1:0)-(down.has('KeyW')?1:0) }
+ p.sneak=!G.overlay&&down.has('ShiftLeft');
+ p.sprint=(down.has('ControlLeft')||G.wSprint)&&iy<0&&!p.sneak&&(G.hunger>6||G.creative);
+ p.inWater=cellAt(p.x,p.y)==='water';
+ if(p.inWater) unlock('swim');
+ let sp=p.sneak?1.3:p.sprint?5.6:4.3;
+ if(p.inWater&&p.jumpT<=0) sp*=.45;
+ if(ix||iy){
+  const len=Math.hypot(ix,iy); p.face={x:ix/len,y:iy/len};
+  const dx=ix/len*sp*dt, dy=iy/len*sp*dt; let moved=0;
+  const ok=(nx,ny)=>{ if(!canBe(nx,ny)) return false; if(p.sneak&&!p.inWater&&cellAt(nx,ny)==='water'){ unlock('sneak'); return false } return true };
+  if(ok(p.x+dx,p.y)){ p.x+=dx; moved+=Math.abs(dx) }
+  if(ok(p.x,p.y+dy)){ p.y+=dy; moved+=Math.abs(dy) }
+  p.walkT+=moved*3;
+  if(p.sprint){ G.stats.run+=moved; if(G.stats.run>=30) unlock('run'); if(Math.random()<.4) G.parts.push({x:p.x,y:p.y+.3,vx:-p.face.x,vy:-p.face.y,life:.35,col:'rgba(220,220,220,.8)'}) }
+  if(p.inWater&&Math.random()<.02) SFX.splash();
+ }
+ if(p.jumpT>0) p.jumpT-=dt;
+ if(!G.creative){ G.hTimer+=dt*(p.sprint?3:1); if(G.hTimer>=30){ G.hTimer=0; if(G.hunger>0) G.hunger-- } }
+ // mining
+ const tg=target();
+ if(G.mb[0]&&!G.overlay&&tg&&tg.reach&&BRK[tg.t]){
+  if(G.mine.idx!==tg.idx){ G.mine={idx:tg.idx,prog:0,tick:0} }
+  G.mine.prog+=dt/(G.creative?.12:BRK[tg.t]); G.mine.tick+=dt; if(G.mine.tick>.22){ G.mine.tick=0; SFX.tick() }
+  if(G.mine.prog>=1){ breakCell(tg); G.mine={idx:-1,prog:0,tick:0} }
+ } else G.mine={idx:-1,prog:0,tick:0};
+ if(G.mb[2]&&!G.overlay){ G.placeCD-=dt; if(G.placeCD<=0){ placeBlock(); G.placeCD=.25 } }
+ // drops
+ for(let i=G.drops.length-1;i>=0;i--){ const d=G.drops[i]; d.age+=dt; if(d.age>1&&Math.hypot(d.x-p.x,d.y-p.y)<.8){ if(give(d.i,d.n)){ G.drops.splice(i,1); SFX.pop(); unlock('drop') } } }
+ for(let i=G.parts.length-1;i>=0;i--){ const q=G.parts[i]; q.x+=q.vx*dt; q.y+=q.vy*dt; q.life-=dt; if(q.life<=0) G.parts.splice(i,1) }
+ if(G.rain){ while(G.rainP.length<140) G.rainP.push({x:Math.random()*CW,y:Math.random()*CH,s:300+Math.random()*200}); G.rainP.forEach(r=>{ r.y+=r.s*dt; r.x-=40*dt; if(r.y>CH){ r.y=-10; r.x=Math.random()*(CW+40) } }) } else G.rainP.length=0;
+ G.toasts.forEach(t=>t.t-=dt); G.toasts=G.toasts.filter(t=>t.t>0);
+ if(G.nameT>0) G.nameT-=dt; if(G.flash>0) G.flash-=dt*2.5;
+}
+
+function drawPlayer(sx,sy,t){
+ const p=G.p; let s=t*.95; if(p.sneak) s*=.86;
+ const j=p.jumpT>0?Math.sin(Math.PI*(1-p.jumpT/.5)):0;
+ ctx.fillStyle='rgba(0,0,0,.28)'; ctx.beginPath(); ctx.ellipse(sx,sy+s*.28,s*.42*(1-j*.3),s*.18*(1-j*.3),0,0,Math.PI*2); ctx.fill();
+ const by=sy-j*t*.4, sc=1+j*.12; s*=sc;
+ const f=p.face, ang=Math.atan2(f.y,f.x)-Math.PI/2;
+ ctx.save(); ctx.translate(sx,by); ctx.rotate(ang);
+ const sw=Math.sin(p.walkT)*s*.12;
+ ctx.fillStyle='#c79a6b'; ctx.fillRect(-s*.5,-s*.1+sw,s*.16,s*.3); ctx.fillRect(s*.34,-s*.1-sw,s*.16,s*.3);
+ ctx.fillStyle=p.sneak?'#2d8a96':'#3fb6c4'; ctx.fillRect(-s*.36,-s*.18,s*.72,s*.36);
+ ctx.fillStyle='#4a2f1a'; ctx.fillRect(-s*.26,-s*.26,s*.52,s*.52);
+ ctx.fillStyle='#c79a6b'; ctx.fillRect(-s*.26,s*.1,s*.52,s*.16);
+ ctx.fillStyle='#fff'; ctx.fillRect(-s*.18,s*.14,s*.1,s*.07); ctx.fillRect(s*.08,s*.14,s*.1,s*.07);
+ ctx.fillStyle='#4b3aa0'; ctx.fillRect(-s*.13,s*.15,s*.05,s*.06); ctx.fillRect(s*.13,s*.15,s*.05,s*.06);
+ const it=selItem(); if(it){ ctx.imageSmoothingEnabled=false; ctx.drawImage(TEX[it.i],s*.3,s*.12,s*.3,s*.3) }
+ ctx.restore();
+ if(p.inWater&&j<=0){ ctx.fillStyle='rgba(58,111,216,.55)'; ctx.fillRect(sx-s*.55,sy,s*1.1,s*.45) }
+}
+function drawHUD(){
+ const sz=Math.min(46,Math.floor((CW-90)/10)), n=9, W=sz*n, x0=Math.round((CW-W)/2), y0=CH-sz-10;
+ ctx.imageSmoothingEnabled=false;
+ // offhand
+ const ox=x0-sz-12;
+ ctx.fillStyle='rgba(0,0,0,.45)'; ctx.fillRect(ox-3,y0-3,sz+6,sz+6);
+ ctx.fillStyle='#8b8b8b'; ctx.fillRect(ox,y0,sz,sz); if(G.off){ ctx.drawImage(TEX[G.off.i],ox+sz*.18,y0+sz*.18,sz*.64,sz*.64); countTxt(G.off.n,ox+sz-3,y0+sz-3) }
+ ctx.fillStyle='rgba(0,0,0,.45)'; ctx.fillRect(x0-3,y0-3,W+6,sz+6);
+ for(let i=0;i<n;i++){ const x=x0+i*sz; ctx.fillStyle='#8b8b8b'; ctx.fillRect(x+1,y0+1,sz-2,sz-2); ctx.fillStyle='#6f6f6f'; ctx.fillRect(x+1,y0+sz-4,sz-2,3);
+  const s=G.hot[i]; if(s){ ctx.drawImage(TEX[s.i],x+sz*.18,y0+sz*.18,sz*.64,sz*.64); countTxt(G.creative?'∞':s.n,x+sz-4,y0+sz-4) }
+  ctx.fillStyle='rgba(255,255,255,.75)'; ctx.font=`800 ${Math.max(9,sz*.24)}px system-ui`; ctx.textAlign='left'; ctx.textBaseline='top'; ctx.fillText(String(i+1),x+3,y0+2) }
+ const sx=x0+G.sel*sz; ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.strokeRect(sx-1.5,y0-1.5,sz+3,sz+3);
+ if(!G.creative){
+  ctx.font=`${Math.round(sz*.34)}px system-ui`; ctx.textBaseline='bottom';
+  for(let i=0;i<10;i++){ ctx.globalAlpha=1; ctx.textAlign='left'; ctx.fillText('❤️',x0+i*sz*.44,y0-6) }
+  for(let i=0;i<10;i++){ ctx.globalAlpha=(G.hunger>=(10-i)*2-1)?1:.22; ctx.textAlign='right'; ctx.fillText('🍗',x0+W-i*sz*.44,y0-6) }
+  ctx.globalAlpha=1;
+ }
+ if(G.nameT>0&&selItem()){ ctx.globalAlpha=Math.min(1,G.nameT); ctx.font='800 16px system-ui'; ctx.textAlign='center'; ctx.textBaseline='bottom'; shadowTxt(tr(ITEM[selItem().i]),CW/2,y0-(G.creative?8:sz*.5+14)); ctx.globalAlpha=1 }
+ if(G.creative){ ctx.font='800 14px system-ui'; ctx.textAlign='center'; ctx.textBaseline='top'; shadowTxt(U().creative,CW/2,8) }
+}
+function countTxt(n,x,y){ if(n===1) return; ctx.font='800 14px system-ui'; ctx.textAlign='right'; ctx.textBaseline='bottom'; shadowTxt(String(n),x,y) }
+function shadowTxt(s,x,y){ ctx.fillStyle='#3f3f3f'; ctx.fillText(s,x+1.5,y+1.5); ctx.fillStyle='#fff'; ctx.fillText(s,x,y) }
+function draw(){
+ ctx.setTransform(DPR,0,0,DPR,0,0); ctx.imageSmoothingEnabled=false;
+ const t=T(), p=G.p, ox=CW/2-p.x*t, oy=CH/2-p.y*t;
+ ctx.fillStyle='#1b3a8a'; ctx.fillRect(0,0,CW,CH);
+ const x0=Math.max(0,Math.floor(-ox/t)), x1=Math.min(G.C,Math.ceil((CW-ox)/t)), y0=Math.max(0,Math.floor(-oy/t)), y1=Math.min(G.R,Math.ceil((CH-oy)/t));
+ const wf=(G.time*2|0)%2;
+ for(let y=y0;y<y1;y++) for(let x=x0;x<x1;x++){
+  const c=G.g[y*G.C+x], X=Math.floor(ox+x*t), Y=Math.floor(oy+y*t), S=Math.ceil(t)+1;
+  if(c==='water') ctx.drawImage(TEX['water'+wf],X,Y,S,S);
+  else if(c==='glass'){ ctx.drawImage(TEX.grass,X,Y,S,S); ctx.drawImage(TEX.glass,X,Y,S,S) }
+  else ctx.drawImage(TEX[c],X,Y,S,S);
+  if(!WALK[c]&&c!=='glass'){ ctx.fillStyle='rgba(0,0,0,.22)'; ctx.fillRect(X,Y+S-Math.max(2,t*.1),S,Math.max(2,t*.1)) }
+ }
+ ctx.strokeStyle='rgba(255,255,255,.5)'; ctx.lineWidth=3; ctx.strokeRect(ox-1.5,oy-1.5,G.C*t+3,G.R*t+3);
+ for(const d of G.drops){ const b=Math.sin(G.time*4+d.x)*t*.06; ctx.drawImage(TEX[d.i],ox+d.x*t-t*.2,oy+d.y*t-t*.2+b,t*.4,t*.4) }
+ const tg=target();
+ if(tg&&!G.overlay){
+  ctx.strokeStyle=tg.reach?'rgba(0,0,0,.85)':'rgba(255,80,80,.5)'; ctx.lineWidth=2; ctx.strokeRect(ox+tg.tx*t+1,oy+tg.ty*t+1,t-2,t-2);
+  if(G.mine.idx===tg.idx&&G.mine.prog>0){ const k=Math.min(9,Math.floor(G.mine.prog*10)); ctx.strokeStyle='rgba(0,0,0,.75)'; ctx.lineWidth=Math.max(1,t/16); ctx.beginPath(); const cx=ox+tg.tx*t+t/2, cy=oy+tg.ty*t+t/2; for(let i=0;i<=k;i++){ const a=i*2.4; ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*t*.45*(i/9+.3),cy+Math.sin(a)*t*.45*(i/9+.3)) } ctx.stroke() }
+ }
+ drawPlayer(CW/2,CH/2,t);
+ for(const q of G.parts){ ctx.fillStyle=q.col; ctx.globalAlpha=Math.max(0,Math.min(1,q.life*2)); ctx.fillRect(ox+q.x*t-t*.05,oy+q.y*t-t*.05,t*.1,t*.1) } ctx.globalAlpha=1;
+ if(G.rain){ ctx.strokeStyle='rgba(180,200,255,.55)'; ctx.lineWidth=1; ctx.beginPath(); G.rainP.forEach(r=>{ ctx.moveTo(r.x,r.y); ctx.lineTo(r.x-3,r.y+10) }); ctx.stroke(); ctx.fillStyle='rgba(40,50,80,.18)'; ctx.fillRect(0,0,CW,CH) }
+ if(G.night){ ctx.fillStyle='rgba(8,14,50,.55)'; ctx.fillRect(0,0,CW,CH); const gr=ctx.createRadialGradient(CW/2,CH/2,10,CW/2,CH/2,t*4); gr.addColorStop(0,'rgba(255,220,150,.18)'); gr.addColorStop(1,'rgba(255,220,150,0)'); ctx.fillStyle=gr; ctx.fillRect(0,0,CW,CH) }
+ if(G.hud){
+  drawHUD();
+  // chat log
+  const now=performance.now(), open=G.overlay==='chat';
+  const list=G.msgs.filter(m=>open||now-m.t<9000).slice(open?-10:-5);
+  ctx.font='600 14px ui-monospace,Menlo,monospace'; ctx.textAlign='left'; ctx.textBaseline='top';
+  let y=CH-(open?60:90)-list.length*20;
+  for(const m of list){ const a=open?1:Math.max(0,Math.min(1,(9000-(now-m.t))/1000)); ctx.globalAlpha=a; const w=Math.min(CW-16,ctx.measureText(m.text).width+10); ctx.fillStyle='rgba(0,0,0,.45)'; ctx.fillRect(8,y,w,20); ctx.fillStyle=m.col; ctx.fillText(m.text,13,y+3,CW-26); y+=20 } ctx.globalAlpha=1;
+  if(G.debug){
+   const d=['north','east','south','west'], f=p.face, di=Math.abs(f.x)>Math.abs(f.y)?(f.x>0?1:3):(f.y>0?2:0);
+   const lines=['Minecraft (trainer)',`XYZ: ${p.x.toFixed(2)} / 64 / ${p.y.toFixed(2)}`,`${U().dbgLook}: ${U().dirs[di]} (${d[di]})`,`${U().dbgBlock}: ${tg?tr(BLOCKNAME[tg.t]||ITEM[tg.t]||{en:tg.t}):'-'}`,`FPS: ${fps}`];
+   ctx.font='600 14px ui-monospace,Menlo,monospace'; lines.forEach((l,i)=>{ const w=ctx.measureText(l).width+8; ctx.fillStyle='rgba(80,80,80,.6)'; ctx.fillRect(6,6+i*19,w,19); ctx.fillStyle='#fff'; ctx.fillText(l,10,8+i*19) });
+  }
+ }
+ // toasts
+ G.toasts.slice(-3).forEach((q,i)=>{ const w=Math.min(300,CW-20), x=CW-w-10, y=10+i*64, a=Math.min(1,q.t*2); ctx.globalAlpha=a; ctx.fillStyle='#212121'; ctx.fillRect(x,y,w,56); ctx.strokeStyle='#555'; ctx.lineWidth=2; ctx.strokeRect(x+1,y+1,w-2,54); ctx.font='28px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillStyle='#fff'; ctx.fillText(q.icon||'',x+10,y+28); ctx.font='800 14px system-ui'; ctx.fillStyle='#ffe066'; ctx.fillText(q.title,x+50,y+(q.sub?19:28),w-60); if(q.sub){ ctx.fillStyle='#fff'; ctx.font='600 14px system-ui'; ctx.fillText(q.sub,x+50,y+38,w-60) } ctx.globalAlpha=1 });
+ if(G.flash>0){ ctx.fillStyle=`rgba(255,255,255,${Math.min(1,G.flash)})`; ctx.fillRect(0,0,CW,CH) }
+}
+function buildWorldLegend(){
+ const rows=[
+  ['KeyW','W A S D','move',{ru:'ходить',de:'laufen',en:'walk'}],['Space','␣','move',{ru:'прыжок',de:'springen',en:'jump'}],
+  ['ShiftLeft','⇧ shift','move',{ru:'красться',de:'schleichen',en:'sneak'}],['ControlLeft','⌃ ctrl + W','move',{ru:'бег (или W два раза)',de:'sprinten (oder 2× W)',en:'sprint (or W twice)'}],
+  ['mouse0','🖱️ L','act',{ru:'держи — ломать',de:'halten — abbauen',en:'hold — break'}],['mouse2','🖱️ R','item',{ru:'ставить, есть яблоко',de:'setzen, Apfel essen',en:'place, eat apple'}],
+  ['mouse1','🖱️ 🎯','view',{ru:'колёсико — взять блок',de:'Rad drücken — Block wählen',en:'wheel press — pick block'}],['wheel','🖱️ 🔄 / 1–9','item',{ru:'выбрать ячейку',de:'Slot wählen',en:'choose slot'}],
+  ['KeyE','E','item',{ru:'рюкзак',de:'Inventar',en:'inventory'}],['KeyQ','Q','item',{ru:'выбросить',de:'wegwerfen',en:'drop'}],['KeyF','F','item',{ru:'другая рука',de:'andere Hand',en:'other hand'}],
+  ['KeyT','T','act',{ru:'чат',de:'Chat',en:'chat'}],['Slash','-','act',{ru:'команда «/»',de:'Befehl „/“',en:'command “/”'}],['KeyL','L','act',{ru:'достижения',de:'Fortschritte',en:'advancements'}],
+  ['Tab','⇥ tab','act',{ru:'игроки',de:'Spieler',en:'players'}],['Escape','esc','view',{ru:'пауза',de:'Pause',en:'pause'}],
+  ['F3','fn + F3','view',{ru:'координаты',de:'Koordinaten',en:'coordinates'}],['F5','fn + F5','view',{ru:'камера',de:'Kamera',en:'camera'}],['F1','fn + F1','view',{ru:'спрятать экран',de:'HUD aus',en:'hide HUD'}],
+ ];
+ $('#wlegend').innerHTML=rows.map(r=>`<div class="wl" data-k="${r[0]}" style="--g:var(--${r[2]})"><kbd>${r[1]}</kbd><span>${tr(r[3])}</span></div>`).join('');
+}
+
+/* ---------- parents ---------- */
+const TIPS={
+ru:[
+['🖱️','Лучше обычная мышка с колёсиком','На тачпаде правая кнопка — клик двумя пальцами, а колёсика и средней кнопки нет. Ломать блоки (держать левую кнопку) на тачпаде семилетке тяжело.'],
+['🌐','F-клавиши — вместе с <kbd>fn</kbd>','<kbd>fn</kbd>+<kbd>F5</kbd> — камера, <kbd>fn</kbd>+<kbd>F3</kbd> — координаты, <kbd>fn</kbd>+<kbd>F1</kbd> — спрятать интерфейс. Без fn клавиша F3 откроет Mission Control, F11 покажет рабочий стол. Навсегда: Системные настройки → Клавиатура → Клавиатурные сокращения → Функциональные клавиши → «Использовать F1, F2 и т. д. как стандартные функциональные клавиши».'],
+['⛔','<kbd>⌘</kbd> — опасная клавиша','<kbd>⌘</kbd>+<kbd>Q</kbd> сразу закрывает Майнкрафт, <kbd>⌘</kbd>+<kbd>Tab</kbd> уводит из игры. В этом тренажёре <kbd>⌘</kbd>+<kbd>W</kbd> закроет вкладку. Страница этих сочетаний не перехватывает специально — пусть рука привыкает не трогать ⌘.'],
+['🔤','<kbd>ctrl</kbd> + пробел меняет язык ввода','Бег (ctrl) + прыжок (пробел) на Mac по умолчанию переключает раскладку, если их несколько (например, немецкая и русская). Два выхода: бегать двойным нажатием <kbd>W</kbd> или выключить сочетание: Системные настройки → Клавиатура → Клавиатурные сокращения → Источники ввода.'],
+['✨','Команды: клавиша <kbd>-</kbd>','Майнкрафт Java читает клавиши по месту на клавиатуре, а не по букве. Поэтому WASD на своих местах, а клавиша команды «/» на немецкой клавиатуре — это <kbd>-</kbd> справа от точки. Надёжный путь: <kbd>T</kbd>, потом «/» как <kbd>Shift</kbd>+<kbd>7</kbd>. Буквы Z и Y поменяны местами, но в игре по умолчанию ни одна не используется.'],
+['🦘','Для начала — автопрыжок','В игре: Настройки → Управление → «Автопрыжок: Вкл». Персонаж сам запрыгивает на блок, пробел нужен реже. Там же, в «Настройках мыши», можно уменьшить чувствительность, если камера крутится слишком быстро.'],
+['⏸️','<kbd>esc</kbd> — пауза','В одиночной игре esc ставит мир на паузу. Хорошее правило для ребёнка: «зовёшь маму — сначала esc».'],
+['🗺️','Что есть в тренажёре','«Изучаем» — нажми клавишу, услышишь, что она делает. «Задания» — пять уровней с голосом и подсказками. «Мир» — маленький Майнкрафт сверху: ходить, ломать, строить, рюкзак, чат и команды (/time set night, /weather rain, /gamemode creative). Прогресс хранится только в этом браузере на этом Mac.'],
+],
+de:[
+['🖱️','Besser eine Maus mit Mausrad','Auf dem Trackpad ist die rechte Taste ein Zwei-Finger-Klick, Mausrad und mittlere Taste fehlen. Blöcke abbauen (linke Taste halten) ist auf dem Trackpad für ein Kind schwer.'],
+['🌐','F-Tasten zusammen mit <kbd>fn</kbd>','<kbd>fn</kbd>+<kbd>F5</kbd> — Kamera, <kbd>fn</kbd>+<kbd>F3</kbd> — Koordinaten, <kbd>fn</kbd>+<kbd>F1</kbd> — Anzeige aus. Ohne fn öffnet F3 Mission Control. Dauerhaft: Systemeinstellungen → Tastatur → Tastaturkurzbefehle → Funktionstasten → „F1, F2 usw. als Standard-Funktionstasten verwenden“.'],
+['⛔','<kbd>⌘</kbd> ist die gefährliche Taste','<kbd>⌘</kbd>+<kbd>Q</kbd> beendet Minecraft sofort, <kbd>⌘</kbd>+<kbd>Tab</kbd> wechselt aus dem Spiel. Auf dieser Seite schließt <kbd>⌘</kbd>+<kbd>W</kbd> den Tab.'],
+['🔤','<kbd>ctrl</kbd> + Leertaste wechselt die Eingabequelle','Sprinten (ctrl) + Springen (Leertaste) wechselt am Mac die Tastatursprache, wenn mehrere eingerichtet sind. Lösung: mit doppeltem <kbd>W</kbd> sprinten oder den Kurzbefehl abschalten: Systemeinstellungen → Tastatur → Tastaturkurzbefehle → Eingabequellen.'],
+['✨','Befehle: Taste <kbd>-</kbd>','Minecraft Java liest Tasten nach ihrer Position, nicht nach dem Buchstaben. Die Befehlstaste „/“ liegt auf der deutschen Tastatur auf <kbd>-</kbd> rechts neben dem Punkt. Sicherer Weg: <kbd>T</kbd>, dann „/“ mit <kbd>Shift</kbd>+<kbd>7</kbd>.'],
+['🦘','Für den Anfang: Auto-Sprung','Im Spiel: Optionen → Steuerung → „Automatisch springen: An“. In den Mauseinstellungen lässt sich die Empfindlichkeit senken.'],
+['⏸️','<kbd>esc</kbd> ist Pause','Im Einzelspieler pausiert esc die Welt.'],
+['🗺️','Was es hier gibt','„Entdecken“ — Taste drücken und hören, was sie tut. „Aufgaben“ — fünf Level mit Stimme. „Welt“ — ein kleines Minecraft von oben mit Inventar, Chat und Befehlen. Der Fortschritt bleibt nur in diesem Browser.'],
+],
+en:[
+['🖱️','A mouse with a wheel works best','On a trackpad, right-click is a two-finger click and there is no wheel or middle button. Holding the left button to break blocks is hard for a young kid on a trackpad.'],
+['🌐','F keys need <kbd>fn</kbd>','<kbd>fn</kbd>+<kbd>F5</kbd> — camera, <kbd>fn</kbd>+<kbd>F3</kbd> — coordinates, <kbd>fn</kbd>+<kbd>F1</kbd> — hide HUD. Without fn, F3 opens Mission Control. Permanently: System Settings → Keyboard → Keyboard Shortcuts → Function Keys → “Use F1, F2, etc. keys as standard function keys”.'],
+['⛔','<kbd>⌘</kbd> is the dangerous key','<kbd>⌘</kbd>+<kbd>Q</kbd> quits Minecraft at once, <kbd>⌘</kbd>+<kbd>Tab</kbd> switches away. On this page <kbd>⌘</kbd>+<kbd>W</kbd> closes the tab.'],
+['🔤','<kbd>ctrl</kbd> + space switches input source','Sprint (ctrl) + jump (space) switches the keyboard language on a Mac when several are set up. Sprint with a double <kbd>W</kbd> instead, or turn the shortcut off: System Settings → Keyboard → Keyboard Shortcuts → Input Sources.'],
+['✨','Commands: the <kbd>-</kbd> key','Minecraft Java reads keys by position, not by letter. The “/” command key sits on <kbd>-</kbd> (right of the dot) on a German keyboard. Safe route: <kbd>T</kbd>, then “/” as <kbd>Shift</kbd>+<kbd>7</kbd>.'],
+['🦘','Start with Auto-Jump','In the game: Options → Controls → “Auto-Jump: ON”. Mouse Settings let you lower sensitivity.'],
+['⏸️','<kbd>esc</kbd> pauses','In single player esc pauses the world.'],
+['🗺️','What’s here','Explore — press a key and hear what it does. Lessons — five levels with voice. World — a tiny top-down Minecraft with inventory, chat and commands. Progress stays in this browser only.'],
+]};
+function renderTips(){
+ const nameLbl={ru:'Имя игрока в «Мире»:',de:'Spielername in der „Welt“:',en:'Player name in the World:'}[LANG];
+ const reset={ru:'Сбросить прогресс',de:'Fortschritt zurücksetzen',en:'Reset progress'}[LANG];
+ $('#tips').innerHTML=TIPS[LANG].map(t=>`<div class="tip"><div class="ti">${t[0]}</div><div><h3>${t[1]}</h3><p>${t[2]}</p></div></div>`).join('')+
+ `<div class="tip"><div class="ti">👧</div><div><h3>${nameLbl}</h3><div class="nameRow"><input id="pname" maxlength="16" value="${escapeHTML(playerName())}"><button class="btn" id="preset">${reset}</button></div></div></div>`;
+ $('#pname').addEventListener('input',e=>store.set('name',e.target.value.trim()));
+ $('#preset').onclick=()=>{ prog={}; store.set('prog',{}); store.set('adv',{}); if(G) G.adv={}; L.li=0; L.ti=0; L.finished=false; store.set('li',0); renderLevels(); SFX.click() };
+}
+
+/* ---------- main loop ---------- */
+let last=performance.now(), fps=60, fAcc=0, fN=0;
+function loop(now){
+ const dt=Math.min(.05,(now-last)/1000); last=now; fAcc+=dt; fN++; if(fAcc>=.5){ fps=Math.round(fN/fAcc); fAcc=0; fN=0 }
+ lessonTick(dt);
+ if(TAB==='world'&&G){ if(cv.width<10) fitCanvas(); update(dt); draw() }
+ requestAnimationFrame(loop);
+}
+if(matchMedia('(pointer:coarse)').matches&&!matchMedia('(pointer:fine)').matches) $('#touchNote').classList.remove('hidden');
+buildKeyboard(); applyLang(); setTab(['explore','lessons','world','parents'].includes(TAB)?TAB:'explore');
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
